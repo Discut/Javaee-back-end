@@ -1,6 +1,7 @@
 package com.ybuse.schoolbackend.core.domain.vo;
 
 import com.ybuse.schoolbackend.utils.ResponseUtil;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 
@@ -9,15 +10,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class ResponseVo<T> {
+@Schema(description = "公共返回结果")
+public class CommonResult<T> {
+    @Schema(description = "状态码")
     private Integer status;
+    @Schema(description = "消息")
     private String message;
+    @Schema(description = "数据封装")
     private T data;
+    @Schema(description = "执行时间")
     private String date;
+    @Schema(description = "执行url路径")
     private String path = "";
     private HttpServletResponse response;
 
-    public ResponseVo() {
+    public CommonResult() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.date = sdf.format(new Date());
     }
@@ -29,12 +36,12 @@ public class ResponseVo<T> {
      * @param <D>
      * @return ResponseVo
      */
-    public static <D> ResponseVo<D> success(D data) {
-        ResponseVo<D> responseVo = new ResponseVo<>();
-        responseVo.setStatus(HttpStatus.OK.value());
-        responseVo.setMessage("success");
-        responseVo.setData(data);
-        return responseVo;
+    public static <D> CommonResult<D> success(D data) {
+        CommonResult<D> commonResult = new CommonResult<>();
+        commonResult.setStatus(HttpStatus.OK.value());
+        commonResult.setMessage("success");
+        commonResult.setData(data);
+        return commonResult;
     }
 
     /**
@@ -44,11 +51,11 @@ public class ResponseVo<T> {
      * @param <D>
      * @return ResponseVo
      */
-    public static <D> ResponseVo<D> unauthorized(String message) {
-        ResponseVo<D> responseVo = new ResponseVo<>();
-        responseVo.setStatus(HttpStatus.UNAUTHORIZED.value());
-        responseVo.setMessage(message);
-        return responseVo;
+    public static <D> CommonResult<D> unauthorized(String message) {
+        CommonResult<D> commonResult = new CommonResult<>();
+        commonResult.setStatus(HttpStatus.UNAUTHORIZED.value());
+        commonResult.setMessage(message);
+        return commonResult;
     }
 
     /**
@@ -58,11 +65,11 @@ public class ResponseVo<T> {
      * @param <D>
      * @return ResponseVo
      */
-    public static <D> ResponseVo<D> error(String message) {
-        ResponseVo<D> responseVo = new ResponseVo<>();
-        responseVo.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        responseVo.setMessage(message);
-        return responseVo;
+    public static <D> CommonResult<D> error(String message) {
+        CommonResult<D> commonResult = new CommonResult<>();
+        commonResult.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        commonResult.setMessage(message);
+        return commonResult;
     }
 
     /**
@@ -72,11 +79,11 @@ public class ResponseVo<T> {
      * @param <D>
      * @return ResponseVo
      */
-    public static <D> ResponseVo<D> forbidden(String message) {
-        ResponseVo<D> responseVo = new ResponseVo<>();
-        responseVo.setStatus(HttpStatus.FORBIDDEN.value());
-        responseVo.setMessage(message);
-        return responseVo;
+    public static <D> CommonResult<D> forbidden(String message) {
+        CommonResult<D> commonResult = new CommonResult<>();
+        commonResult.setStatus(HttpStatus.FORBIDDEN.value());
+        commonResult.setMessage(message);
+        return commonResult;
     }
 
 
@@ -85,7 +92,7 @@ public class ResponseVo<T> {
         return status;
     }
 
-    public ResponseVo<T> setStatus(Integer status) {
+    public CommonResult<T> setStatus(Integer status) {
         this.status = status;
         return this;
     }
@@ -94,7 +101,7 @@ public class ResponseVo<T> {
         return message;
     }
 
-    public ResponseVo<T> setMessage(String message) {
+    public CommonResult<T> setMessage(String message) {
         this.message = message;
         return this;
     }
@@ -103,7 +110,7 @@ public class ResponseVo<T> {
         return data;
     }
 
-    public ResponseVo<T> setData(T data) {
+    public CommonResult<T> setData(T data) {
         this.data = data;
         return this;
     }
@@ -112,7 +119,7 @@ public class ResponseVo<T> {
         return date;
     }
 
-    public ResponseVo<T> setDate(String date) {
+    public CommonResult<T> setDate(String date) {
         this.date = date;
         return this;
     }
@@ -121,12 +128,12 @@ public class ResponseVo<T> {
         return path;
     }
 
-    public ResponseVo<T> setPath(String path) {
+    public CommonResult<T> setPath(String path) {
         this.path = path;
         return this;
     }
 
-    public ResponseVo<T> putIn(HttpServletResponse response) {
+    public CommonResult<T> putIn(HttpServletResponse response) {
         this.response = response;
         return this;
     }

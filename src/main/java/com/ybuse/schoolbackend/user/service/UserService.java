@@ -3,8 +3,8 @@ package com.ybuse.schoolbackend.user.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.ybuse.schoolbackend.core.domain.vo.ResponseVo;
-import com.ybuse.schoolbackend.user.domain.vo.LoginResponseVo;
+import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
+import com.ybuse.schoolbackend.user.domain.dto.LoginResponseDto;
 import com.ybuse.schoolbackend.user.domain.vo.UserInfoVo;
 import com.ybuse.schoolbackend.user.service.itfc.IUserService;
 import com.ybuse.schoolbackend.utils.TokenBlacklistUtil;
@@ -32,12 +32,12 @@ public class UserService implements IUserService {
     }
 
     // 登录
-    public ResponseVo<LoginResponseVo> login(String username, String password) {
+    public CommonResult<LoginResponseDto> login(String username, String password) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         Object userObject = authenticate.getPrincipal();
         User user = userObject instanceof User ? (User) userObject : null;
-        ResponseVo<LoginResponseVo> objectResponseVo = new ResponseVo<>();
+        CommonResult<LoginResponseDto> objectCommonResult = new CommonResult<>();
         if (authenticate.isAuthenticated()) {
            /* String token = UserUtil.getToken(user, secret, expMillis);
             LoginResponseVo loginResponseVo = new LoginResponseVo(token);
@@ -48,14 +48,14 @@ public class UserService implements IUserService {
             com.ybuse.schoolbackend.user.domain.dto.User user1 = new com.ybuse.schoolbackend.user.domain.dto.User();
             user1.setUser(user);
             String token = TokenUtil.getAccessToken(user1);
-            LoginResponseVo loginResponseVo = new LoginResponseVo(token);
-            return ResponseVo.success(loginResponseVo).setMessage("登录成功");
+            LoginResponseDto loginResponseDto = new LoginResponseDto(token);
+            return CommonResult.success(loginResponseDto).setMessage("登录成功");
         }
-        return objectResponseVo;
+        return objectCommonResult;
     }
 
     @Override
-    public ResponseVo<Object> logout(String token) {
+    public CommonResult<Object> logout(String token) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.isAuthenticated()) {
             User user = authentication.getPrincipal() instanceof User ? (User) authentication.getPrincipal() : null;
@@ -63,32 +63,32 @@ public class UserService implements IUserService {
                 SecurityContextHolder.getContext().setAuthentication(null);
                 long expirationInterval = TokenUtil.getExpirationInterval(token);
                 TokenBlacklistUtil.addBlacklist(user.getUsername(), token, expirationInterval > 0 ? expirationInterval : 0);
-                return ResponseVo.success(null).setMessage("退出成功");
+                return CommonResult.success(null).setMessage("退出成功");
             }
         }
-        return ResponseVo.error("意外的错误");
+        return CommonResult.error("意外的错误");
     }
 
     @Override
-    public ResponseVo<UserInfoVo> getUserInfo(String token) {
+    public CommonResult<UserInfoVo> getUserInfo(String token) {
         Map<String, Object> json = TokenUtil.parseToken(token);
         String username = String.valueOf(json.get(UserUtil.USER_NAME));
-        JSONArray rolesJson = null;
+        JSONArray rolesJson;
         if (json.get(UserUtil.USER_ROLES) instanceof cn.hutool.json.JSONArray roles) {
             rolesJson = (JSONArray) JSON.parse(roles.toString());
         }else {
             rolesJson = (JSONArray) json.get(UserUtil.USER_ROLES);
         }
-        ResponseVo<UserInfoVo> objectResponseVo = new ResponseVo<>();
+        CommonResult<UserInfoVo> objectCommonResult = new CommonResult<>();
         List<String> roles = new ArrayList<>();
         for (Object role : rolesJson) {
             JSONObject r = (JSONObject) role;
             roles.add(String.valueOf(r.get("authority")));
         }
         UserInfoVo userInfoVo = new UserInfoVo(username, roles, null, null);
-        objectResponseVo.setData(userInfoVo);
-        objectResponseVo.setStatus(200);
-        objectResponseVo.setMessage("获取用户信息成功");
-        return objectResponseVo;
+        objectCommonResult.setData(userInfoVo);
+        objectCommonResult.setStatus(200);
+        objectCommonResult.setMessage("获取用户信息成功");
+        return objectCommonResult;
     }
 }

@@ -3,7 +3,7 @@ package com.ybuse.schoolbackend.core.filter;
 import cn.hutool.core.exceptions.ValidateException;
 import com.alibaba.druid.util.StringUtils;
 import com.ybuse.schoolbackend.core.aop.annotation.LogMethod;
-import com.ybuse.schoolbackend.core.domain.vo.ResponseVo;
+import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.utils.ResponseUtil;
 import com.ybuse.schoolbackend.utils.TokenBlacklistUtil;
 import com.ybuse.schoolbackend.utils.TokenUtil;
@@ -37,7 +37,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         // 验证请求头是否带token
         if (StringUtils.isEmpty(token)) {
-            // 由于登录时需要放行，所以直接放行
             filterChain.doFilter(request, response);
             return;
         }
@@ -48,7 +47,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             TokenUtil.validateTokenDate(token);
         } catch (ValidateException e) {
             // 返回错误信息
-            ResponseUtil.returnJson(response, ResponseVo.unauthorized(e.getMessage()));
+            ResponseUtil.returnJson(response, CommonResult.unauthorized(e.getMessage()));
             return;
         }
         try {
@@ -60,7 +59,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             }*/
             // 检查token是否存在于黑名单
             if (TokenBlacklistUtil.isBlacklist(map.get("username").toString(), token)) {
-                ResponseVo.unauthorized("token已被注销")
+                CommonResult.unauthorized("token已被注销")
                         .putIn(response)
                         .send();
                 return;

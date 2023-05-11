@@ -1,7 +1,7 @@
 package com.ybuse.schoolbackend.core.handler;
 
 
-import com.ybuse.schoolbackend.core.domain.vo.ResponseVo;
+import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.utils.ResponseUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,11 +19,10 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
      * @param response              so that the user agent can be advised of the failure
      * @param accessDeniedException that caused the invocation
      * @throws IOException      in the event of an IOException
-     * @throws ServletException in the event of a ServletException
      */
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        ResponseVo<Object> forbidden = ResponseVo.forbidden(accessDeniedException.getMessage());
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
+        CommonResult<Object> forbidden = CommonResult.forbidden(accessDeniedException.getMessage());
         ResponseUtil.returnJson(response, forbidden);
     }
 }

@@ -39,7 +39,7 @@ public class WebSecurityConfig {
     /**
      * 添加Security的用户
      *
-     * @return
+     * @return SecurityFilterChain
      */
     // @Bean
     public UserDetailsService myUserDetailsService() {
@@ -66,7 +66,8 @@ public class WebSecurityConfig {
                 .and()
                 //.authorizeRequests()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/user/login").anonymous()
+                .requestMatchers("/api/v1/user/login").permitAll()
+                .requestMatchers("/v1/api-docs/**", "/swagger-ui/**").permitAll()// 过滤swagger访问路径
                 //.antMatchers("/api/v1/user/login").anonymous()
                 .anyRequest().authenticated()
                 .and().cors().configurationSource(corsConfiguration());

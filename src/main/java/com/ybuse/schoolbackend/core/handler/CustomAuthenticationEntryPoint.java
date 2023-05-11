@@ -1,8 +1,7 @@
 package com.ybuse.schoolbackend.core.handler;
 
-import com.ybuse.schoolbackend.core.domain.vo.ResponseVo;
+import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.utils.ResponseUtil;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
@@ -28,8 +27,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
      * @param authException that caused the invocation
      */
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ResponseVo<Object> unauthorized = ResponseVo.unauthorized(authException.getMessage());
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        CommonResult<Object> unauthorized = CommonResult.unauthorized(authException.getMessage());
         authException.printStackTrace();
         ResponseUtil.returnJson(response, unauthorized);
     }

@@ -1,10 +1,10 @@
-package com.ybuse.schoolbackend.user.domain.vo;
+package com.ybuse.schoolbackend.user.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoginResponseVo {
+public class LoginResponseDto {
     private String token;
 }
