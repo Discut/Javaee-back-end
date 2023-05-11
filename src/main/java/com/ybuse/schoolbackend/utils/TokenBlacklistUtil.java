@@ -1,7 +1,7 @@
 package com.ybuse.schoolbackend.utils;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.ybuse.schoolbackend.core.aop.annotation.LogMethod;
+import com.ybuse.schoolbackend.core.annotation.aop.LogMethod;
 import lombok.Data;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -12,9 +12,9 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * token黑名单工具类
+ *
  * @author Discut
- * @date 2023/4/28
- * @description token黑名单工具类
  */
 public class TokenBlacklistUtil {
     private static final String BLACKLIST_KEY = "blacklist:";

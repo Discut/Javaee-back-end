@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.aop.aspect;
+package com.ybuse.schoolbackend.core.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 @Component
 @Order(1)
 public class MethodAspect {
-    @Pointcut("@annotation(com.ybuse.schoolbackend.core.aop.annotation.LogMethod)")
+    @Pointcut("@annotation(com.ybuse.schoolbackend.core.annotation.aop.LogMethod)")
     public void executePoint() {
     }
 

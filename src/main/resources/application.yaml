@@ -5,6 +5,7 @@ logging:
 spring:
   api-docs:
     enabled: false # 关闭api文档
+    default-group-name: 默认 # 自定义properties 默认swagger分类label
   output:
     ansi: true
   application:

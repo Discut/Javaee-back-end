@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.annotation;
+package com.ybuse.schoolbackend.core.annotation.controller;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestMapping;

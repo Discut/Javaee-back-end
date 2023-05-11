@@ -2,7 +2,7 @@ package com.ybuse.schoolbackend.core.filter;
 
 import cn.hutool.core.exceptions.ValidateException;
 import com.alibaba.druid.util.StringUtils;
-import com.ybuse.schoolbackend.core.aop.annotation.LogMethod;
+import com.ybuse.schoolbackend.core.annotation.aop.LogMethod;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.utils.ResponseUtil;
 import com.ybuse.schoolbackend.utils.TokenBlacklistUtil;

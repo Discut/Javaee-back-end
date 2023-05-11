@@ -1,6 +1,6 @@
 package com.ybuse.schoolbackend.core.configuration;
 
-import com.ybuse.schoolbackend.core.annotation.ApiV1Controller;
+import com.ybuse.schoolbackend.core.annotation.controller.ApiV1Controller;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;

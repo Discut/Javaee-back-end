@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.aop.annotation;
+package com.ybuse.schoolbackend.core.annotation.aop;
 
 
 import java.lang.annotation.Documented;
