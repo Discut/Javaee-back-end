@@ -1,7 +1,7 @@
 package com.ybuse.schoolbackend.user.controller;
 
-import com.ybuse.schoolbackend.core.controller.annotation.ApiV1Controller;
-import com.ybuse.schoolbackend.core.controller.security.annotation.EnableApiSecurity;
+import com.ybuse.schoolbackend.core.ApiV1Controller;
+import com.ybuse.schoolbackend.core.apisecurity.annotation.EnableApiSecurity;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import com.ybuse.schoolbackend.user.domain.dto.LoginDto;

@@ -54,8 +54,8 @@
         <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
         <!--这里指代生效的日志级别和 输出的内容，这里代表生效的是 debug ，
         文件和控制台都会输出，如果是在环境留下file就可以了，file和CONSOLE 来自于 <Appenders> 配置的标签 -->
-        <Root level="INFO">
-            <AppenderRef ref="file"/>
+        <Root level="DEBUG">
+            <!--<AppenderRef ref="file"/>-->
             <AppenderRef ref="CONSOLE"/>
         </Root>
 

@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.controller.security.dto;
+package com.ybuse.schoolbackend.core.apisecurity.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

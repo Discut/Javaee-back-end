@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.controller.security.annotation;
+package com.ybuse.schoolbackend.core.apisecurity.annotation;
 
 
 import java.lang.annotation.ElementType;

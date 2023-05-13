@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.controller.security.exception;
+package com.ybuse.schoolbackend.core.apisecurity.exception;
 
 import com.ybuse.schoolbackend.core.CustomException;
 

@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.controller.security.properties;
+package com.ybuse.schoolbackend.core.apisecurity.properties;
 
 import lombok.Data;
 import org.springframework.boot.SpringBootConfiguration;

@@ -5,3 +5,5 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 debug: true
+logging:
+  config: "classpath:log4j2-dev.xml"

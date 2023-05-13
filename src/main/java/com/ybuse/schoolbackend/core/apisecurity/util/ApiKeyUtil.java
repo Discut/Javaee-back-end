@@ -1,13 +1,13 @@
-package com.ybuse.schoolbackend.core.controller.security.util;
+package com.ybuse.schoolbackend.core.apisecurity.util;
 
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.JWTValidator;
 import cn.hutool.jwt.signers.JWTSignerUtil;
-import com.ybuse.schoolbackend.core.controller.security.ISubjectProvider;
-import com.ybuse.schoolbackend.core.controller.security.exception.ApiKeyException;
-import com.ybuse.schoolbackend.core.controller.security.properties.ApiKeyProperties;
+import com.ybuse.schoolbackend.core.apisecurity.ISubjectProvider;
+import com.ybuse.schoolbackend.core.apisecurity.exception.ApiKeyException;
+import com.ybuse.schoolbackend.core.apisecurity.properties.ApiKeyProperties;
 import lombok.NonNull;
 import lombok.val;
 import org.springframework.data.redis.core.RedisTemplate;

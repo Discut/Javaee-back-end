@@ -1,10 +1,10 @@
-package com.ybuse.schoolbackend.core.controller.security.controller;
+package com.ybuse.schoolbackend.core.apisecurity.controller;
 
 
-import com.ybuse.schoolbackend.core.controller.annotation.ApiV1Controller;
-import com.ybuse.schoolbackend.core.controller.security.ISubjectProvider;
-import com.ybuse.schoolbackend.core.controller.security.dto.ApiKeyDto;
-import com.ybuse.schoolbackend.core.controller.security.util.ApiKeyUtil;
+import com.ybuse.schoolbackend.core.ApiV1Controller;
+import com.ybuse.schoolbackend.core.apisecurity.ISubjectProvider;
+import com.ybuse.schoolbackend.core.apisecurity.dto.ApiKeyDto;
+import com.ybuse.schoolbackend.core.apisecurity.util.ApiKeyUtil;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import io.swagger.v3.oas.annotations.Operation;

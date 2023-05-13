@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.controller.security;
+package com.ybuse.schoolbackend.core.apisecurity;
 
 import org.springframework.context.annotation.Bean;
 

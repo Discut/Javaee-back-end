@@ -1,11 +1,11 @@
-package com.ybuse.schoolbackend.core.controller.security.aop;
+package com.ybuse.schoolbackend.core.apisecurity.aop;
 
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
-import com.ybuse.schoolbackend.core.controller.security.ISubjectProvider;
-import com.ybuse.schoolbackend.core.controller.security.exception.ApiKeyException;
-import com.ybuse.schoolbackend.core.controller.security.properties.ApiKeyProperties;
-import com.ybuse.schoolbackend.core.controller.security.util.ApiKeyUtil;
+import com.ybuse.schoolbackend.core.apisecurity.ISubjectProvider;
+import com.ybuse.schoolbackend.core.apisecurity.exception.ApiKeyException;
+import com.ybuse.schoolbackend.core.apisecurity.properties.ApiKeyProperties;
+import com.ybuse.schoolbackend.core.apisecurity.util.ApiKeyUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,7 +35,7 @@ public class ApiSecurityAspect {
      */
     private ApiKeyProperties apiKeyProperties;
 
-    @Pointcut("@annotation(com.ybuse.schoolbackend.core.controller.security.annotation.EnableApiSecurity)")
+    @Pointcut("@annotation(com.ybuse.schoolbackend.core.apisecurity.annotation.EnableApiSecurity)")
     public void apiSecurity() {
     }
 
