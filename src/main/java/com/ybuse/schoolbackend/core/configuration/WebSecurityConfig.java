@@ -15,10 +15,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +32,9 @@ import java.util.Objects;
 public class WebSecurityConfig {
 
     private UserDetailsService userDetailsService;
+
+    private OncePerRequestFilter customExceptionFilter;
+
 
     @Autowired
     public void setUserDetailsService(UserDetailsService userDetailsService) {
@@ -76,6 +81,9 @@ public class WebSecurityConfig {
         jwtAuthenticationTokenFilter.setUserDetailsService(myUserDetailsService());
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // 添加自定义异常处理
+        http.addFilterAfter(customExceptionFilter, ExceptionTranslationFilter.class);
+
         // 添加自定义handler
         http.exceptionHandling()
                 // 认证handler
@@ -120,4 +128,8 @@ public class WebSecurityConfig {
     }
 
 
+    @Autowired
+    public void setCustomExceptionFilter(OncePerRequestFilter customExceptionFilter) {
+        this.customExceptionFilter = customExceptionFilter;
+    }
 }

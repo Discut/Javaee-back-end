@@ -1,6 +1,9 @@
 package com.ybuse.schoolbackend.core.handler;
 
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
+import com.ybuse.schoolbackend.core.logger.annotation.ArgsFilter;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
+import com.ybuse.schoolbackend.core.logger.annotation.TypeFilter;
 import com.ybuse.schoolbackend.utils.ResponseUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +13,10 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import java.io.IOException;
 
 
+@PrintLog("CustomAuthenticationEntryPoint")
+@ArgsFilter(
+        @TypeFilter({HttpServletRequest.class, HttpServletResponse.class})
+)
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     /**
      * Commences an authentication scheme.

@@ -1,7 +1,7 @@
 package com.ybuse.schoolbackend.user.controller;
 
-import com.ybuse.schoolbackend.core.annotation.controller.ApiV1Controller;
-import com.ybuse.schoolbackend.core.annotation.aop.LogMethod;
+import com.ybuse.schoolbackend.core.controller.annotation.ApiV1Controller;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.user.domain.dto.LoginDto;
 import com.ybuse.schoolbackend.user.domain.dto.LoginResponseDto;
@@ -25,7 +25,7 @@ public class LoginAndRegisterController {
         this.service = service;
     }
 
-    @LogMethod
+    @PrintLog
     @Operation(summary = "用户登录")
     @PostMapping("/login")
     public CommonResult<LoginResponseDto> login(@RequestBody LoginDto loginDto) {

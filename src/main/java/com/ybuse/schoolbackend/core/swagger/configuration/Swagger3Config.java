@@ -1,6 +1,6 @@
-package com.ybuse.schoolbackend.core.configuration;
+package com.ybuse.schoolbackend.core.swagger.configuration;
 
-import com.ybuse.schoolbackend.core.annotation.swagger.Mark;
+import com.ybuse.schoolbackend.core.swagger.annotation.SwaggerMark;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -27,10 +27,18 @@ public class Swagger3Config implements BeanPostProcessor {
     private static boolean isScan = false;
     final ConfigurableListableBeanFactory beanFactory;
     @Value("${spring.api-docs.default-group-name}")
-    private final String defaultGroupName = "default";
+    private String defaultGroupName = "default";
 
     public Swagger3Config(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
+    }
+
+    public String getDefaultGroupName() {
+        return defaultGroupName;
+    }
+
+    public void setDefaultGroupName(String defaultGroupName) {
+        this.defaultGroupName = defaultGroupName;
     }
 
     /**
@@ -49,9 +57,9 @@ public class Swagger3Config implements BeanPostProcessor {
         // 获取被标记的包
         Map<String, List<Package>> packages = new HashMap<>();
         for (Package aPackage : Package.getPackages()) {
-            Mark mark = aPackage.getAnnotation(Mark.class);
-            if (mark != null) {
-                addPackages(packages, mark, aPackage);
+            SwaggerMark swaggerMark = aPackage.getAnnotation(SwaggerMark.class);
+            if (swaggerMark != null) {
+                addPackages(packages, swaggerMark, aPackage);
             }
         }
         // 注册API说明
@@ -78,14 +86,14 @@ public class Swagger3Config implements BeanPostProcessor {
      * 添加包
      *
      * @param packages 包列表
-     * @param mark     注解对象
+     * @param swaggerMark     注解对象
      * @param aPackage 被添加的包
      */
-    private void addPackages(Map<String, List<Package>> packages, Mark mark, Package aPackage) {
-        if (packages.containsKey(mark.value())) {
-            packages.get(mark.value()).add(aPackage);
+    private void addPackages(Map<String, List<Package>> packages, SwaggerMark swaggerMark, Package aPackage) {
+        if (packages.containsKey(swaggerMark.value())) {
+            packages.get(swaggerMark.value()).add(aPackage);
         } else {
-            String key = mark.value().equals("") ? defaultGroupName : mark.value();
+            String key = swaggerMark.value().equals("") ? defaultGroupName : swaggerMark.value();
             ArrayList<Package> list = new ArrayList<>();
             list.add(aPackage);
             packages.put(key, list);

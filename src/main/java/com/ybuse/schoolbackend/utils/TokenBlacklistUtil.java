@@ -1,7 +1,7 @@
 package com.ybuse.schoolbackend.utils;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.ybuse.schoolbackend.core.annotation.aop.LogMethod;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import lombok.Data;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -26,7 +26,7 @@ public class TokenBlacklistUtil {
      * @param token token
      * @return 是否存在于黑名单
      */
-    @LogMethod
+    @PrintLog
     public static boolean isBlacklist(String key, String token) {
         RedisTemplate<String, Object> bean = SpringUtil.getBean("redisTemplate", RedisTemplate.class);
         if (Objects.isNull(bean))

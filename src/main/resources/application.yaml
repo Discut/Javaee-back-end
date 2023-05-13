@@ -2,6 +2,10 @@ server:
   port: 8080
 logging:
   config: "classpath:log4j2.xml"
+system-config:
+  api-key:
+    secret: "123456" # 自定义properties 密钥
+    expire-time: 600000 # 自定义properties 过期时间
 spring:
   api-docs:
     enabled: false # 关闭api文档

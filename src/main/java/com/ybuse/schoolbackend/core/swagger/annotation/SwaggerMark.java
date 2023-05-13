@@ -1,4 +1,4 @@
-package com.ybuse.schoolbackend.core.annotation.swagger;
+package com.ybuse.schoolbackend.core.swagger.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 
@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.PACKAGE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Mark {
+public @interface SwaggerMark {
     @AliasFor("tag")
     String value() default "";
 
