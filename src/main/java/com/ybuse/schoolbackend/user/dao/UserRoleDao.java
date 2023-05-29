@@ -1,7 +1,8 @@
 package com.ybuse.schoolbackend.user.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-
+import com.ybuse.schoolbackend.core.logger.MethodType;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import com.ybuse.schoolbackend.user.domain.dto.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,10 @@ import java.util.List;
 
 @Mapper
 @Repository
+@PrintLog(
+        methodType = MethodType.DB,
+        resultLog = false
+)
 public interface UserRoleDao extends BaseMapper<User> {
     @Select("SELECT * FROM user")
     @Results({

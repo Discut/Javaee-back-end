@@ -3,6 +3,7 @@ package com.ybuse.schoolbackend.user.controller;
 import com.ybuse.schoolbackend.core.ApiV1Controller;
 import com.ybuse.schoolbackend.core.apisecurity.annotation.EnableApiSecurity;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
+import com.ybuse.schoolbackend.core.logger.MethodType;
 import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import com.ybuse.schoolbackend.user.domain.dto.LoginDto;
 import com.ybuse.schoolbackend.user.domain.vo.UserInfoVo;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
 
-@PrintLog
+@PrintLog(
+    methodType = MethodType.HTTP_UP
+)
 @Tag(name = "用户主体操作API", description = "用于用户操作的API", externalDocs = @ExternalDocumentation(description = "Swagger3(OpenAPI)常用注解参考", url = "https://blog.csdn.net/qq_35425070/article/details/105347336"))
 @ApiV1Controller("/user")
 public class UserController {
@@ -30,7 +34,6 @@ public class UserController {
         this.service = service;
     }
 
-
     @PostMapping("/logout")
     public CommonResult<Object> logout(HttpServletRequest request) {
         String token = TokenUtil.getTokenFor(request);
@@ -38,7 +41,6 @@ public class UserController {
     }
 
 
-    @EnableApiSecurity
     @PostMapping("/info")
     public CommonResult<UserInfoVo> info(@RequestBody Map<String, Object> json) {
         Object token = json.get("token");

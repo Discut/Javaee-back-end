@@ -1,6 +1,6 @@
 package com.ybuse.schoolbackend.core.logger.annotation;
 
-
+import com.ybuse.schoolbackend.core.logger.MethodType;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.Documented;
@@ -29,5 +29,27 @@ public @interface PrintLog {
      */
     @AliasFor(value = "value")
     String[] tags() default {"default"};
+
+    /**
+     * 是否打印结果
+     *
+     * @return true打印结果
+     */
+    boolean resultLog() default true;
+
+
+    /**
+     * 是否打印入参
+     *
+     * @return true打印入参
+     */
+    boolean paramLog() default true;
+
+    /**
+     * 方法类型
+     *
+     * @return 方法类型
+     */
+    MethodType methodType() default MethodType.UNKNOWN;
 
 }
