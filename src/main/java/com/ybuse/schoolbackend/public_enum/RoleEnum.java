@@ -2,6 +2,7 @@ package com.ybuse.schoolbackend.public_enum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 @Getter
 @AllArgsConstructor
