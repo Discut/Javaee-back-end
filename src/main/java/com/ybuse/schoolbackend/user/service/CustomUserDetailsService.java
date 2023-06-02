@@ -9,7 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
-@Service("customUserDetailsService")
+//@Service("customUserDetailsService")
+@Deprecated
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRoleDao userRoleDao;
