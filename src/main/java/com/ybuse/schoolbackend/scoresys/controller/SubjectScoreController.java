@@ -28,9 +28,9 @@ public class SubjectScoreController {
 
 
     @Operation(description = "扣分")
-    @PreAuthorize("hasAuthority(T(com.ybuse.schoolbackend.public_enum.RoleEnum).TEACHER.code) or " +
-            "hasAuthority(T(com.ybuse.schoolbackend.public_enum.RoleEnum).ADMIN.code) or " +
-            "hasAuthority(T(com.ybuse.schoolbackend.public_enum.RoleEnum).STUDENT.code)")// 权限验证
+//    @PreAuthorize("hasAuthority(T(com.ybuse.schoolbackend.public_enum.RoleEnum).TEACHER.code) or " +
+//            "hasAuthority(T(com.ybuse.schoolbackend.public_enum.RoleEnum).ADMIN.code) or " +
+//            "hasAuthority(T(com.ybuse.schoolbackend.public_enum.RoleEnum).STUDENT.code)")// 权限验证
     @PostMapping("/deduct/{type}")
     public CommonResult<Object> deduct(@PathVariable String type, @RequestBody DeductScoreVo deductScoreVo) {
         DeductScoreFactory.getInstance().operation(type, deductScoreVo);

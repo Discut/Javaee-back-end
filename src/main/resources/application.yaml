@@ -32,8 +32,8 @@ spring:
           min-idle: 0 #连接池中的最小空闲连接
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/ssmp_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
-    username: root
+    url: jdbc:mariadb://106.52.233.60:3306/ssmp_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: myroot
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
     name: datasource

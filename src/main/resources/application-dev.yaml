@@ -7,3 +7,26 @@ springdoc:
 debug: true
 logging:
   config: "classpath:log4j2-dev.xml"
+
+
+
+##  图片上传路径
+file-save-path: J:/ssmp/images/
+
+##  客户端（前端）首页地址
+client-url: http://192.168.227.1:8080/#/pages/index/index
+
+##  二维码logo地址
+qrLogo-path: J:/ssmp/images/qr/qrLogo.jpg
+
+##  桶域名前置
+kodo_pre_url: http://rvmy28bqc.hn-bkt.clouddn.com/
+
+##  AI远程调用模块
+remote_server_url:
+  resolution: http://127.0.0.1:9998/upload
+  identification: http://127.0.0.1/
+
+###  服务外网ip或域名，格式为：http://192.168.1.28
+#domain-path: http://192.168.227.1
+
