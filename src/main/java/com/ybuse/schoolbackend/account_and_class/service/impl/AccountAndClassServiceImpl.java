@@ -2,8 +2,8 @@ package com.ybuse.schoolbackend.account_and_class.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ybuse.schoolbackend.account_and_class.domain.po.AccountAndClassPo;
-import com.ybuse.schoolbackend.account_and_class.service.AccountAndClassService;
 import com.ybuse.schoolbackend.account_and_class.mapper.AccountAndClassMapper;
+import com.ybuse.schoolbackend.account_and_class.service.IAccountAndClassService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class AccountAndClassServiceImpl extends ServiceImpl<AccountAndClassMapper, AccountAndClassPo>
-    implements AccountAndClassService {
+    implements IAccountAndClassService {
 
     @Resource
     private AccountAndClassMapper accountAndClassMapper;
 
     @Override
-    public void add(AccountAndClassPo accountAndClassPo) {
-        accountAndClassMapper.insert(accountAndClassPo);
+    public int add(AccountAndClassPo accountAndClassPo) {
+        return accountAndClassMapper.insert(accountAndClassPo);
     }
 }
 
