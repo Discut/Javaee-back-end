@@ -9,7 +9,6 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.IOUtils;
-import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
