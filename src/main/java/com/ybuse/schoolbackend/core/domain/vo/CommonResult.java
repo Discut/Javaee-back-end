@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Schema(description = "公共返回结果")
@@ -43,6 +45,16 @@ public class CommonResult<T> {
         commonResult.setData(data);
         return commonResult;
     }
+
+//    public static <D> CommonResult<D> successSingle(D data) {
+//        Map<String, Object> result = new HashMap<>(16);
+//        CommonResult<D> commonResult = new CommonResult<>();
+//        commonResult.setStatus(HttpStatus.OK.value());
+//        commonResult.setMessage("success");
+//        result.put("url", data);
+//        commonResult.setData((D) result);
+//        return commonResult;
+//    }
 
     /**
      * 未验证
