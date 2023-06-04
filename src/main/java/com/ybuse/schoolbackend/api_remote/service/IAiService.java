@@ -2,6 +2,8 @@ package com.ybuse.schoolbackend.api_remote.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ybuse.schoolbackend.api_remote.po.ImagePo;
+import com.ybuse.schoolbackend.core.logger.MethodType;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -14,6 +16,9 @@ import java.io.InputStream;
  *  Description:
  *
  */
+@PrintLog(
+        methodType = MethodType.DB
+)
 public interface IAiService extends IService<ImagePo> {
 
 

@@ -5,6 +5,8 @@ import com.ybuse.schoolbackend.api_remote.po.ImagePo;
 import com.ybuse.schoolbackend.api_remote.service.IAiService;
 import com.ybuse.schoolbackend.clazz.dao.IImageMapper;
 import com.ybuse.schoolbackend.core.CustomException;
+import com.ybuse.schoolbackend.core.logger.MethodType;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import com.ybuse.schoolbackend.utils.ExceptionUtil;
 import com.ybuse.schoolbackend.utils.KodoUtil;
 import lombok.val;
@@ -27,6 +29,9 @@ import java.sql.Timestamp;
  * Description:
  */
 @Service
+@PrintLog(
+        methodType = MethodType.SERVICE
+)
 public class AiServiceImpl extends ServiceImpl<IImageMapper, ImagePo> implements IAiService {
 
     final
