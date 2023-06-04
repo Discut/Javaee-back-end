@@ -9,8 +9,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @Author: hyj
+ * @Date: 2023/6/3
+ * @Title: ---------
+ * Description:
+ */
 @Service
-public class ClassService extends ServiceImpl<IClassMapper, ClassName> implements IClassService {
+public class ClassServiceImpl extends ServiceImpl<IClassMapper, ClassName> implements IClassService {
+
 
     @Override
     public List<ClassName> findAll() {
@@ -18,7 +25,15 @@ public class ClassService extends ServiceImpl<IClassMapper, ClassName> implement
     }
 
     @Override
-    public List<ClassName> findAllByRole(Role role) {
-        return this.list();
+    public List<ClassName> findAllByClass(String className) {
+        return null;
     }
+
+
+    @Override
+    public boolean addClass(ClassName className) {
+        return this.save(className);
+    }
+
+
 }
