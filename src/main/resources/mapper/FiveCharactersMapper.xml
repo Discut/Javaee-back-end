@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybuse.schoolbackend.five_characters.mapper.FiveCharactersMapper">
+
+    <resultMap id="BaseResultMap" type="com.ybuse.schoolbackend.five_characters.domain.po.FiveCharactersPo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="fcType" column="fc_type" jdbcType="TINYINT"/>
+            <result property="fcComment" column="fc_comment" jdbcType="VARCHAR"/>
+            <result property="fcScore" column="fc_score" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,fc_type,fc_comment,
+        fc_score,create_time
+    </sql>
+</mapper>

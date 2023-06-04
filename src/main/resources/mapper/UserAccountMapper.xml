@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybuse.schoolbackend.user_account.mapper.UserAccountMapper">
+
+    <resultMap id="BaseResultMap" type="com.ybuse.schoolbackend.user_account.domain.po.UserAccountPo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="uaName" column="ua_name" jdbcType="VARCHAR"/>
+            <result property="uaAccount" column="ua_account" jdbcType="VARCHAR"/>
+            <result property="uaPassword" column="ua_password" jdbcType="VARCHAR"/>
+            <result property="uaType" column="ua_type" jdbcType="TINYINT"/>
+            <result property="uaClassId" column="ua_class_id" jdbcType="INTEGER"/>
+            <result property="uaGroup" column="ua_group" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="lastLogin" column="last_login" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,ua_name,ua_account,
+        ua_password,ua_type,ua_class_id,
+        ua_group,create_time,last_login
+    </sql>
+</mapper>

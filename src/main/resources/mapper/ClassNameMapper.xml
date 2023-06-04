@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybuse.schoolbackend.class_name.mapper.ClassNameMapper">
+
+    <resultMap id="BaseResultMap" type="com.ybuse.schoolbackend.class_name.domain.po.ClassNamePo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="className" column="class_name" jdbcType="VARCHAR"/>
+            <result property="qrUuid" column="qr_uuid" jdbcType="VARCHAR"/>
+            <result property="classTeacher" column="class_teacher" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,class_name,qr_uuid,
+        class_teacher,create_time
+    </sql>
+</mapper>
