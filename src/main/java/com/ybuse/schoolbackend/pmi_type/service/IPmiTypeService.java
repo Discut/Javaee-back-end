@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【pmi_type】的数据库操作Service
 * @createDate 2023-06-03 17:14:43
 */
-public interface PmiTypeService extends IService<PmiTypePo> {
+public interface IPmiTypeService extends IService<PmiTypePo> {
 
-    void add(PmiTypePo pmiTypePo);
+    int add(PmiTypePo pmiTypePo);
 
 }

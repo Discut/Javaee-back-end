@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【exam_score】的数据库操作Service
 * @createDate 2023-06-03 17:13:15
 */
-public interface ExamScoreService extends IService<ExamScorePo> {
-    void add(ExamScorePo examScorePo);
+public interface IExamScoreService extends IService<ExamScorePo> {
+    int add(ExamScorePo examScorePo);
 }

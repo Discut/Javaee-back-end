@@ -3,7 +3,6 @@ package com.ybuse.schoolbackend.user_account.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ybuse.schoolbackend.Application;
 import com.ybuse.schoolbackend.user_account.domain.po.UserAccountPo;
-import com.ybuse.schoolbackend.user_account.service.UserAccountService;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

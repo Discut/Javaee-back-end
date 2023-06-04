@@ -1,8 +1,10 @@
 package com.ybuse.schoolbackend.user_and_other.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ybuse.schoolbackend.core.logger.MethodType;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import com.ybuse.schoolbackend.user_and_other.domain.po.UserAndOtherPo;
-import com.ybuse.schoolbackend.user_and_other.service.UserAndOtherService;
+import com.ybuse.schoolbackend.user_and_other.service.IUserAndOtherService;
 import com.ybuse.schoolbackend.user_and_other.mapper.UserAndOtherMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -13,15 +15,18 @@ import org.springframework.stereotype.Service;
 * @createDate 2023-06-03 17:16:57
 */
 @Service
+@PrintLog(
+        methodType = MethodType.SERVICE
+)
 public class UserAndOtherServiceImpl extends ServiceImpl<UserAndOtherMapper, UserAndOtherPo>
-    implements UserAndOtherService {
+    implements IUserAndOtherService {
 
     @Resource
     private UserAndOtherMapper userAndOtherMapper;
 
     @Override
-    public void add(UserAndOtherPo userAndOtherPo) {
-        userAndOtherMapper.insert(userAndOtherPo);
+    public int add(UserAndOtherPo userAndOtherPo) {
+        return userAndOtherMapper.insert(userAndOtherPo);
     }
 }
 

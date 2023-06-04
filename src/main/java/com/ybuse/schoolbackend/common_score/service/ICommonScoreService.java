@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【common_score】的数据库操作Service
 * @createDate 2023-06-03 17:12:36
 */
-public interface CommonScoreService extends IService<CommonScorePo> {
-    void add(CommonScorePo commonScorePo);
+public interface ICommonScoreService extends IService<CommonScorePo> {
+    int add(CommonScorePo commonScorePo);
 }

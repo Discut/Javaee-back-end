@@ -2,8 +2,10 @@ package com.ybuse.schoolbackend.active_manager.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ybuse.schoolbackend.active_manager.domain.po.ActiveManagerPo;
-import com.ybuse.schoolbackend.active_manager.service.ActiveManagerService;
 import com.ybuse.schoolbackend.active_manager.mapper.ActiveManagerMapper;
+import com.ybuse.schoolbackend.active_manager.service.IActiveManagerService;
+import com.ybuse.schoolbackend.core.logger.MethodType;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +15,18 @@ import org.springframework.stereotype.Service;
 * @createDate 2023-06-03 17:10:33
 */
 @Service
+@PrintLog(
+        methodType = MethodType.SERVICE
+)
 public class ActiveManagerServiceImpl extends ServiceImpl<ActiveManagerMapper, ActiveManagerPo>
-    implements ActiveManagerService {
+    implements IActiveManagerService {
 
     @Resource
     private ActiveManagerMapper activeManagerMapper;
 
     @Override
-    public void add(ActiveManagerPo activeManagerPo) {
-        activeManagerMapper.insert(activeManagerPo);
+    public int add(ActiveManagerPo activeManagerPo) {
+        return activeManagerMapper.insert(activeManagerPo);
     }
 }
 

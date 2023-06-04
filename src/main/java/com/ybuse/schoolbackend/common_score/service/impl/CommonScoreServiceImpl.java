@@ -2,8 +2,10 @@ package com.ybuse.schoolbackend.common_score.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ybuse.schoolbackend.common_score.domain.po.CommonScorePo;
-import com.ybuse.schoolbackend.common_score.service.CommonScoreService;
+import com.ybuse.schoolbackend.common_score.service.ICommonScoreService;
 import com.ybuse.schoolbackend.common_score.mapper.NewCommonScoreMapper;
+import com.ybuse.schoolbackend.core.logger.MethodType;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +15,18 @@ import org.springframework.stereotype.Service;
 * @createDate 2023-06-03 17:12:36
 */
 @Service
+@PrintLog(
+        methodType = MethodType.SERVICE
+)
 public class CommonScoreServiceImpl extends ServiceImpl<NewCommonScoreMapper, CommonScorePo>
-    implements CommonScoreService {
+    implements ICommonScoreService {
 
     @Resource
     private NewCommonScoreMapper newCommonScoreMapper;
 
     @Override
-    public void add(CommonScorePo commonScorePo) {
-        newCommonScoreMapper.insert(commonScorePo);
+    public int add(CommonScorePo commonScorePo) {
+        return newCommonScoreMapper.insert(commonScorePo);
     }
 }
 

@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【class_name】的数据库操作Service
 * @createDate 2023-06-03 17:12:00
 */
-public interface ClassNameService extends IService<ClassNamePo> {
+public interface IClassNameService extends IService<ClassNamePo> {
 
-    void add(ClassNamePo classNamePo);
+    int add(ClassNamePo classNamePo);
 
 }

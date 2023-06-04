@@ -1,8 +1,10 @@
 package com.ybuse.schoolbackend.user_account.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ybuse.schoolbackend.core.logger.MethodType;
+import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import com.ybuse.schoolbackend.user_account.domain.po.UserAccountPo;
-import com.ybuse.schoolbackend.user_account.service.UserAccountService;
+import com.ybuse.schoolbackend.user_account.service.IUserAccountService;
 import com.ybuse.schoolbackend.user_account.mapper.UserAccountMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -13,15 +15,18 @@ import org.springframework.stereotype.Service;
 * @createDate 2023-06-03 17:16:23
 */
 @Service
+@PrintLog(
+        methodType = MethodType.SERVICE
+)
 public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserAccountPo>
-    implements UserAccountService{
+    implements IUserAccountService {
 
     @Resource
     private UserAccountMapper userAccountMapper;
 
     @Override
-    public void insert(UserAccountPo userAccountPo) {
-        userAccountMapper.insert(userAccountPo);
+    public int insert(UserAccountPo userAccountPo) {
+        return userAccountMapper.insert(userAccountPo);
     }
 
 }
