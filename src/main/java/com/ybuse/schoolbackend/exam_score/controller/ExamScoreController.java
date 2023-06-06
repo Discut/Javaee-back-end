@@ -69,26 +69,35 @@ public class ExamScoreController {
     @Operation(summary = "get examScore")
     public CommonResult<Object> getExamScoreByStudentName(@PathVariable String studentName,@PathVariable String content) {
 
-        List<ExamScorePo> allByClassName = examScoreService.findAllByStudentName(studentName,content);
+//        List<ExamScorePo> allByClassName = examScoreService.findAllByStudentName(studentName,content);
 
 
-//        val maps = classNameService.findAll().stream().map(classNamePo -> {
-//            Map<String, Object> map = new HashMap<>(16);
-//            map.put("id", classNamePo.getId());
-//            map.put("name", classNamePo.getClassName());
-//            return map;
-//        }).toList();
-//        System.out.println(maps);
-        return CommonResult.success(allByClassName);
+        val maps = examScoreService.findAllByStudentName(studentName,content).stream().map(classNamePo -> {
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("id", classNamePo.getId());
+            map.put("esScore", classNamePo.getEsScore());
+            map.put("esTitle", classNamePo.getEsTitle());
+            return map;
+        }).toList();
+        System.out.println(maps);
+        return CommonResult.success(maps);
     }
 
     @GetMapping("/get/class/{className}/{content}")
     @Operation(summary = "get examScore")
     public CommonResult<Object> getExamScoreByClassName(@PathVariable String className,@PathVariable String content) {
 
-        List<ExamScorePo> allByClassName = examScoreService.findAllByClassName(className,content);
+//        List<ExamScorePo> allByClassName = examScoreService.findAllByClassName(className,content);
 
-        return CommonResult.success(allByClassName);
+        val maps = examScoreService.findAllByClassName(className,content).stream().map(classNamePo -> {
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("id", classNamePo.getId());
+            map.put("esScore", classNamePo.getEsScore());
+            map.put("esTitle", classNamePo.getEsTitle());
+            return map;
+        }).toList();
+        System.out.println(maps);
+        return CommonResult.success(maps);
     }
 
     /**
