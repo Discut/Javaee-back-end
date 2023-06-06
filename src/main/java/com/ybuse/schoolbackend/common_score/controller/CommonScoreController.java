@@ -42,7 +42,7 @@ public class CommonScoreController {
     }
 
     @PostMapping("/add")
-    @Operation(summary = "添加成绩")
+    @Operation(summary = "添加操行分")
     public CommonResult<Object> addScore(@RequestBody CommonScoreVo commonScoreVo) {
 
         System.out.println("here");
@@ -61,6 +61,9 @@ public class CommonScoreController {
 
         return CommonResult.success(returnId);
     }
+
+
+
 
 
 }
