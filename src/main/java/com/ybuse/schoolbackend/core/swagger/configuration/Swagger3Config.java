@@ -1,10 +1,13 @@
 package com.ybuse.schoolbackend.core.swagger.configuration;
 
 import com.ybuse.schoolbackend.core.swagger.annotation.SwaggerMark;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
@@ -107,7 +110,16 @@ public class Swagger3Config implements BeanPostProcessor {
                         .description("RESTful风格后端API")
                         .version("v1")
                         .license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0"))
-                ).externalDocs(new ExternalDocumentation().description("Swagger3(OpenAPI)常用注解参考").url("https://blog.csdn.net/qq_35425070/article/details/105347336"));
+                )
+                .components(components())
+                .addSecurityItem(new SecurityRequirement().addList("tokenScheme"))
+                .externalDocs(new ExternalDocumentation().description("Swagger3(OpenAPI)常用注解参考").url("https://blog.csdn.net/qq_35425070/article/details/105347336"));
+    }
+    // 在组件中注册安全策略
+    private Components components(){
+        return new Components()
+                // 第一个参数是key值，后面是初始化一个安全策略的参数
+                .addSecuritySchemes("tokenScheme", new SecurityScheme().type(SecurityScheme.Type.APIKEY).in(SecurityScheme.In.HEADER).description("用户请求身份验证").name("Authorization"));
     }
 
 }
