@@ -35,6 +35,16 @@ public class ExamScoreServiceImpl extends ServiceImpl<ExamScoreMapper, ExamScore
     public List<ExamScorePo> findAll() {
         return this.list();
     }
+
+    @Override
+    public List<ExamScorePo> findAllByClassName(String className, String content) {
+        return examScoreMapper.findAllByClassName(className,content);
+    }
+
+    @Override
+    public List<ExamScorePo> findAllByStudentName(String studentName, String content) {
+        return examScoreMapper.findAllByStudentName(studentName,content);
+    }
 }
 
 

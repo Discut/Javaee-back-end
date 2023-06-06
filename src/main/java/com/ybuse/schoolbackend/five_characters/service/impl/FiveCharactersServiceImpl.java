@@ -9,6 +9,8 @@ import com.ybuse.schoolbackend.five_characters.mapper.FiveCharactersMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author 30277
 * @description 针对表【five_characters】的数据库操作Service实现
@@ -27,6 +29,11 @@ public class FiveCharactersServiceImpl extends ServiceImpl<FiveCharactersMapper,
     @Override
     public int add(FiveCharactersPo fiveCharactersPo) {
         return fiveCharactersMapper.insert(fiveCharactersPo);
+    }
+
+    @Override
+    public List<FiveCharactersPo> findAll() {
+        return this.list();
     }
 }
 
