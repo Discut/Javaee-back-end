@@ -9,6 +9,8 @@ import com.ybuse.schoolbackend.pmi_type.mapper.PmiTypeMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author 30277
 * @description 针对表【pmi_type】的数据库操作Service实现
@@ -27,6 +29,11 @@ public class PmiTypeServiceImpl extends ServiceImpl<PmiTypeMapper, PmiTypePo>
     @Override
     public int add(PmiTypePo pmiTypePo) {
         return pmiTypeMapper.insert(pmiTypePo);
+    }
+
+    @Override
+    public List<PmiTypePo> findAll() {
+        return this.list();
     }
 }
 

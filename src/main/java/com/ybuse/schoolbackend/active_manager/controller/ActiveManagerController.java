@@ -78,9 +78,9 @@ public class ActiveManagerController {
         }
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{activeId}")
     @Operation(summary = "delete active")
-    public CommonResult<Object> deleteActive(@RequestBody int activeId) {
+    public CommonResult<Object> deleteActive(@PathVariable("activeId") int activeId) {
 
         ExceptionUtil.isTrue(!activeManagerService.removeById(activeId),"删除失败");
         int i = classAndOtherService.deleteById(activeId);
@@ -91,7 +91,6 @@ public class ActiveManagerController {
     @PutMapping("/modify")
     @Operation(summary = "update active")
     public CommonResult<Object> updateActive(@RequestBody ActiveManagerVo activeManagerVo) {
-
 
         ActiveManagerPo activeManagerPo = new ActiveManagerPo();
         activeManagerPo.setAmContent(activeManagerVo.getContent());

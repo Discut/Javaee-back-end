@@ -1,20 +1,21 @@
-package com.ybuse.schoolbackend.class_name.controller;
+package com.ybuse.schoolbackend.prize_manager.controller;
 
 import com.ybuse.schoolbackend.class_name.domain.po.ClassNamePo;
-import com.ybuse.schoolbackend.class_name.service.IClassNameService;
 import com.ybuse.schoolbackend.core.ApiV1Controller;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.core.logger.MethodType;
 import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
+import com.ybuse.schoolbackend.prize_manager.domain.po.PrizeManagerPo;
+import com.ybuse.schoolbackend.prize_manager.service.IPrizeManagerService;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  @Author: hyj
@@ -27,43 +28,39 @@ import java.util.Map;
 @PrintLog(
         methodType = MethodType.HTTP_UP
 )
-@Tag(name = "ActiveManagerController", description = "ActiveManagerController", externalDocs = @ExternalDocumentation(description = "Swagger3(OpenAPI)常用注解参考", url = "https://blog.csdn.net/qq_35425070/article/details/105347336"))
+@Tag(name = "PrizeManagerController", description = "用于操作class的api", externalDocs = @ExternalDocumentation(description = "Swagger3(OpenAPI)常用注解参考", url = "https://blog.csdn.net/qq_35425070/article/details/105347336"))
 @ApiV1Controller("/class")
-public class ClassNameController {
-    /**
-     * 服务对象
-     */
-    private final IClassNameService classNameService;
+public class PrizeManagerController {
 
-    public ClassNameController(IClassNameService classNameService) {
-        this.classNameService = classNameService;
-    }
+    // todo all
+    @Autowired
+    private IPrizeManagerService prizeManagerService;
 
     @PostMapping("/post")
     @Operation(summary = "create class")
-    public CommonResult<Object> addClass(@RequestBody ClassNamePo classNamePo) {
-        classNameService.add(classNamePo);
+    public CommonResult<Object> addClass(@RequestBody PrizeManagerPo classNamePo) {
+        prizeManagerService.add(classNamePo);
         return CommonResult.success("ok");
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete")
     @Operation(summary = "delete active")
-    public CommonResult<Object> deleteClass(@PathVariable("id") int id) {
-        classNameService.removeById(id);
+    public CommonResult<Object> deleteClass(@RequestBody int id) {
+        prizeManagerService.removeById(id);
         return CommonResult.success("ok");
     }
 
     @PutMapping("/put")
     @Operation(summary = "put active")
     public CommonResult<Object> putClass(@RequestBody ClassNamePo classNamePo) {
-        classNameService.updateById(classNamePo);
+        prizeManagerService.updateById(classNamePo);
         return CommonResult.success("ok");
     }
 
     @GetMapping("/get")
     @Operation(summary = "get active")
     public CommonResult<Object> getAllClass() {
-        val maps = classNameService.findAll().stream().map(classNamePo -> {
+        val maps = prizeManagerService.findAll().stream().map(classNamePo -> {
             Map<String, Object> map = new HashMap<>(16);
             map.put("id", classNamePo.getId());
             map.put("name", classNamePo.getClassName());
@@ -72,5 +69,6 @@ public class ClassNameController {
         System.out.println(maps);
         return CommonResult.success(maps);
     }
-}
 
+
+}
