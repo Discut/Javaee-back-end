@@ -17,6 +17,7 @@ public class ActiveManagerVo {
     private String startTime;
     private String endTime;
     private String content;
+    private String endContent;
     /**
      * 班级
      */

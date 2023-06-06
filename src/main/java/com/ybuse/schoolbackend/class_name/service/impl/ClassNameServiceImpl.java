@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ybuse.schoolbackend.class_name.domain.po.ClassNamePo;
 import com.ybuse.schoolbackend.class_name.service.IClassNameService;
 import com.ybuse.schoolbackend.class_name.mapper.ClassNameMapper;
+import com.ybuse.schoolbackend.clazz.domain.po.ClassName;
 import com.ybuse.schoolbackend.core.logger.MethodType;
 import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author 30277
@@ -27,6 +30,16 @@ public class ClassNameServiceImpl extends ServiceImpl<ClassNameMapper, ClassName
     @Override
     public int add(ClassNamePo classNamePo) {
         return classNameMapper.insert(classNamePo);
+    }
+
+    @Override
+    public int queryByClassName(String className) {
+        return (int)classNameMapper.queryByClassName(className);
+    }
+
+    @Override
+    public List<ClassNamePo> findAll() {
+        return this.list();
     }
 }
 

@@ -2,6 +2,9 @@ package com.ybuse.schoolbackend.exam_score.service;
 
 import com.ybuse.schoolbackend.exam_score.domain.po.ExamScorePo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.beans.PropertyValues;
+
+import java.util.List;
 
 /**
 * @author 30277
@@ -10,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface IExamScoreService extends IService<ExamScorePo> {
     int add(ExamScorePo examScorePo);
+
+    /**
+     * 查询所有成绩
+     * @return List<ExamScorePo>
+     */
+    List<ExamScorePo> findAll();
 }

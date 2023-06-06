@@ -5,17 +5,23 @@ import com.ybuse.schoolbackend.active_manager.domain.vo.ActiveManagerVo;
 import com.ybuse.schoolbackend.active_manager.service.IActiveManagerService;
 import com.ybuse.schoolbackend.class_and_other.domain.po.ClassAndOtherPo;
 import com.ybuse.schoolbackend.class_and_other.service.IClassAndOtherService;
+import com.ybuse.schoolbackend.class_name.service.IClassNameService;
 import com.ybuse.schoolbackend.core.ApiV1Controller;
 import com.ybuse.schoolbackend.core.CustomException;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.core.logger.MethodType;
 import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
+import com.ybuse.schoolbackend.utils.ExceptionUtil;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.val;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -35,16 +41,18 @@ public class ActiveManagerController {
 
     private final IActiveManagerService activeManagerService;
     private final IClassAndOtherService classAndOtherService;
+    private final IClassNameService classNameService;
 
-    public ActiveManagerController(IActiveManagerService activeManagerService, IClassAndOtherService classAndOtherService) {
+    public ActiveManagerController(IActiveManagerService activeManagerService, IClassAndOtherService classAndOtherService, IClassNameService classNameService) {
         this.activeManagerService = activeManagerService;
         this.classAndOtherService = classAndOtherService;
+        this.classNameService = classNameService;
     }
 
 
     @PostMapping("/put")
-    @Operation(summary = "添加活动")
-    public CommonResult<Object> addPo(@RequestBody ActiveManagerVo activeManagerVo) {
+    @Operation(summary = "create active")
+    public CommonResult<Object> addActive(@RequestBody ActiveManagerVo activeManagerVo) {
         try{
             ActiveManagerPo activeManagerPo = new ActiveManagerPo();
             activeManagerPo.setAmName(activeManagerVo.getTitle());
@@ -69,4 +77,45 @@ public class ActiveManagerController {
             throw new CustomException(e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete")
+    @Operation(summary = "delete active")
+    public CommonResult<Object> deleteActive(@RequestBody int activeId) {
+
+        ExceptionUtil.isTrue(!activeManagerService.removeById(activeId),"删除失败");
+        int i = classAndOtherService.deleteById(activeId);
+        return CommonResult.success("ok-"+i);
+
+    }
+
+    @PutMapping("/modify")
+    @Operation(summary = "update active")
+    public CommonResult<Object> updateActive(@RequestBody ActiveManagerVo activeManagerVo) {
+
+
+        ActiveManagerPo activeManagerPo = new ActiveManagerPo();
+        activeManagerPo.setAmContent(activeManagerVo.getContent());
+        activeManagerPo.setAmEndContent(activeManagerVo.getEndContent());
+        val interval = activeManagerVo.getStartTime() + "|" + activeManagerVo.getEndTime();
+        activeManagerPo.setAmTimeInterval(interval);
+        activeManagerPo.setCreateTime(new java.sql.Timestamp(System.currentTimeMillis()));
+
+        ExceptionUtil.isTrue(!activeManagerService.updateById(activeManagerPo),"删除失败");
+
+        return CommonResult.success("ok");
+    }
+
+    @GetMapping("/list/{className}")
+    @Operation(summary = "query active by (classname)")
+    public CommonResult<Object> queryActive(@PathVariable("className") String className) {
+
+        int classId = classNameService.queryByClassName(className);
+        List<ActiveManagerPo> allActiveByClassId = classAndOtherService.queryAllActiveByClassId(classId);
+
+        Map<String, Object> result = new HashMap<>(16);
+        result.put("classActive", allActiveByClassId);
+
+        return CommonResult.success(result);
+    }
+
 }

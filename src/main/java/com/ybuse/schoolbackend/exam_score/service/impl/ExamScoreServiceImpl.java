@@ -9,6 +9,8 @@ import com.ybuse.schoolbackend.exam_score.mapper.ExamScoreMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author 30277
 * @description 针对表【exam_score】的数据库操作Service实现
@@ -27,6 +29,11 @@ public class ExamScoreServiceImpl extends ServiceImpl<ExamScoreMapper, ExamScore
     @Override
     public int add(ExamScorePo examScorePo) {
         return examScoreMapper.insert(examScorePo);
+    }
+
+    @Override
+    public List<ExamScorePo> findAll() {
+        return this.list();
     }
 }
 
