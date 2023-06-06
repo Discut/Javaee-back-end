@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "SubjectScoreController", description = "用于操作分数的api", externalDocs = @ExternalDocumentation(description = "Swagger3(OpenAPI)常用注解参考", url = "https://blog.csdn.net/qq_35425070/article/details/105347336"))
 @ApiV1Controller("/score")
 public class SubjectScoreController {
-    private String teacher = RoleEnum.TEACHER.getCode().toString();
 
 
     @Operation(description = "扣分")

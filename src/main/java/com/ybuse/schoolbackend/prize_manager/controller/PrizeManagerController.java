@@ -27,6 +27,7 @@ import java.util.Map;
         methodType = MethodType.HTTP_UP
 )
 @Tag(name = "PrizeManagerController", description = "用于操作class的api", externalDocs = @ExternalDocumentation(description = "Swagger3(OpenAPI)常用注解参考", url = "https://blog.csdn.net/qq_35425070/article/details/105347336"))
+
 @ApiV1Controller("/prize_manager")
 public class PrizeManagerController {
 
@@ -36,6 +37,7 @@ public class PrizeManagerController {
     public PrizeManagerController(IPrizeManagerService prizeManagerService) {
         this.prizeManagerService = prizeManagerService;
     }
+
 
     @PostMapping("/post")
     @Operation(summary = "create class")
@@ -55,6 +57,7 @@ public class PrizeManagerController {
     @Operation(summary = "put active")
     public CommonResult<Object> putClass(@RequestBody PrizeManagerPo prizeManagerPo) {
         prizeManagerService.updateById(prizeManagerPo);
+
         return CommonResult.success("ok");
     }
 
