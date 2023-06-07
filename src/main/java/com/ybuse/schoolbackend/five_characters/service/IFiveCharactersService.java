@@ -2,6 +2,9 @@ package com.ybuse.schoolbackend.five_characters.service;
 
 import com.ybuse.schoolbackend.five_characters.domain.po.FiveCharactersPo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.beans.PropertyValues;
+
+import java.util.List;
 
 /**
 * @author 30277
@@ -10,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface IFiveCharactersService extends IService<FiveCharactersPo> {
     int add(FiveCharactersPo fiveCharactersPo);
+
+    List<FiveCharactersPo> findAll();
 }

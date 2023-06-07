@@ -19,4 +19,20 @@ public interface IExamScoreService extends IService<ExamScorePo> {
      * @return List<ExamScorePo>
      */
     List<ExamScorePo> findAll();
+
+    /**
+     * 根据班级名称 、 模糊查询 查询所有信息
+     * @param className 班级名称
+     * @param content 模糊查询内容
+     * @return List<ExamScorePo>
+     */
+    List<ExamScorePo> findAllByClassName(String className,String content);
+
+    /**
+     * 根据学生名称 、 模糊查询 查询所有信息
+     * @param studentName 学生名称
+     * @param content 模糊查询内容
+     * @return List<ExamScorePo>
+     */
+    List<ExamScorePo> findAllByStudentName(String studentName, String content);
 }

@@ -9,6 +9,8 @@ import com.ybuse.schoolbackend.prize_manager.mapper.PrizeManagerMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author 30277
 * @description 针对表【prize_manager】的数据库操作Service实现
@@ -27,6 +29,11 @@ public class PrizeManagerServiceImpl extends ServiceImpl<PrizeManagerMapper, Pri
     @Override
     public int add(PrizeManagerPo prizeManagerPo) {
         return prizeManagerMapper.insert(prizeManagerPo);
+    }
+
+    @Override
+    public List<PrizeManagerPo> findAll() {
+        return this.list();
     }
 }
 

@@ -2,6 +2,9 @@ package com.ybuse.schoolbackend.prize_manager.service;
 
 import com.ybuse.schoolbackend.prize_manager.domain.po.PrizeManagerPo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.beans.PropertyValues;
+
+import java.util.List;
 
 /**
 * @author 30277
@@ -10,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface IPrizeManagerService extends IService<PrizeManagerPo> {
     int add(PrizeManagerPo prizeManagerPo);
+
+    /**
+     * 查询所有授奖信息
+     * @return List<PrizeManagerPo>
+     */
+    List<PrizeManagerPo> findAll();
 }
