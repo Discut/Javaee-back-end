@@ -119,12 +119,18 @@ public class UserService implements IUserService {
 
     @Override
     public CommonResult<List<com.ybuse.schoolbackend.scoresys.domain.dto.User>> getStudentList(String key, String classId) {
+        ClassName className = null;
+        if (StringUtils.isNotBlank(classId)) {
+            val classNameLambdaQueryWrapper = new LambdaQueryWrapper<ClassName>();
+            classNameLambdaQueryWrapper.eq(StringUtils.isNotBlank(classId), ClassName::getClassName, classId);
+            className = classMapper.selectOne(classNameLambdaQueryWrapper);
+        }
         LambdaQueryWrapper<UserAccount> objectLambdaQueryWrapper = new LambdaQueryWrapper<>();
-
-        val classNameLambdaQueryWrapper = new LambdaQueryWrapper<ClassName>();
-        classNameLambdaQueryWrapper.eq(StringUtils.isNotBlank(classId), ClassName::getClassName, classId);
-        ClassName className = classMapper.selectOne(classNameLambdaQueryWrapper);
-        objectLambdaQueryWrapper.eq(UserAccount::getId, className.getId())
+        objectLambdaQueryWrapper.eq(
+                        Objects.nonNull(className),
+                        UserAccount::getId,
+                        Objects.nonNull(className) ? className.getId() : "")
+                .eq(UserAccount::getUaType, 4)
                 .like(StringUtils.isNotBlank(key), UserAccount::getUaAccount, key);
         val list = userAccountDao.selectList(objectLambdaQueryWrapper).stream().map(u -> {
             val user = new com.ybuse.schoolbackend.scoresys.domain.dto.User();

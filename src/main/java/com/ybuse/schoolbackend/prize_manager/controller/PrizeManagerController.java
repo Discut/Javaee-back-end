@@ -1,3 +1,4 @@
+/*
 package com.ybuse.schoolbackend.prize_manager.controller;
 
 import com.ybuse.schoolbackend.core.ApiV1Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  @Author: hyj
  @Date: 2023/6/6
@@ -22,7 +24,8 @@ import java.util.Map;
  * ---------
  *  Description:
  *
- */
+ *//*
+
 @PrintLog(
         methodType = MethodType.HTTP_UP
 )
@@ -76,3 +79,4 @@ public class PrizeManagerController {
 
 
 }
+*/

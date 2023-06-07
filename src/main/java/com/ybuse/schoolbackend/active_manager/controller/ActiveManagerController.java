@@ -1,5 +1,8 @@
 package com.ybuse.schoolbackend.active_manager.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.ybuse.schoolbackend.active_manager.ActiveStatusEnum;
+import com.ybuse.schoolbackend.active_manager.domain.dto.ActiveDto;
 import com.ybuse.schoolbackend.active_manager.domain.po.ActiveManagerPo;
 import com.ybuse.schoolbackend.active_manager.domain.vo.ActiveManagerVo;
 import com.ybuse.schoolbackend.active_manager.service.IActiveManagerService;
@@ -16,21 +19,19 @@ import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 /**
- @Author: hyj
- @Date: 2023/6/4
- @Title:
- * ---------
- *  Description:
- *
+ * @Author: hyj
+ * @Date: 2023/6/4
+ * @Title: ---------
+ * Description:
  */
 @PrintLog(
         methodType = MethodType.HTTP_UP
@@ -53,7 +54,7 @@ public class ActiveManagerController {
     @PostMapping("/put")
     @Operation(summary = "create active")
     public CommonResult<Object> addActive(@RequestBody ActiveManagerVo activeManagerVo) {
-        try{
+        try {
             ActiveManagerPo activeManagerPo = new ActiveManagerPo();
             activeManagerPo.setAmName(activeManagerVo.getTitle());
             activeManagerPo.setAmContent(activeManagerVo.getContent());
@@ -73,7 +74,7 @@ public class ActiveManagerController {
             int id = classAndOtherService.add(classAndOtherPo);
             return CommonResult.success(id);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -82,9 +83,9 @@ public class ActiveManagerController {
     @Operation(summary = "delete active")
     public CommonResult<Object> deleteActive(@PathVariable("activeId") int activeId) {
 
-        ExceptionUtil.isTrue(!activeManagerService.removeById(activeId),"删除失败");
+        ExceptionUtil.isTrue(!activeManagerService.removeById(activeId), "删除失败");
         int i = classAndOtherService.deleteById(activeId);
-        return CommonResult.success("ok-"+i);
+        return CommonResult.success("ok-" + i);
 
     }
 
@@ -99,7 +100,7 @@ public class ActiveManagerController {
         activeManagerPo.setAmTimeInterval(interval);
         activeManagerPo.setCreateTime(new java.sql.Timestamp(System.currentTimeMillis()));
 
-        ExceptionUtil.isTrue(!activeManagerService.updateById(activeManagerPo),"删除失败");
+        ExceptionUtil.isTrue(!activeManagerService.updateById(activeManagerPo), "删除失败");
 
         return CommonResult.success("ok");
     }
@@ -110,11 +111,46 @@ public class ActiveManagerController {
 
         int classId = classNameService.queryByClassName(className);
         List<ActiveManagerPo> allActiveByClassId = classAndOtherService.queryAllActiveByClassId(classId);
+        val list = allActiveByClassId.stream().map(activeManagerPo -> {
+            val startTimeString = activeManagerPo.getAmTimeInterval().split("\\|")[0];
+            val endTimeString = activeManagerPo.getAmTimeInterval().split("\\|")[1];
+            val startTime = LocalDate.parse(startTimeString);
+            val endTime = LocalDate.parse(endTimeString);
+            ActiveDto activeDto = new ActiveDto(activeManagerPo);
+            activeDto.setId(String.valueOf(activeManagerPo.getId()));
+            activeDto.setTitle(activeManagerPo.getAmName());
+            activeDto.setContent(activeManagerPo.getAmContent());
+            activeDto.setEndContent(activeManagerPo.getAmEndContent());
+            activeDto.setStartTime(activeManagerPo.getAmTimeInterval().split("\\|")[0]);
+            activeDto.setEndTime(activeManagerPo.getAmTimeInterval().split("\\|")[1]);
+            if (endTime.isBefore(startTime)) {
+                activeDto.setStatus(ActiveStatusEnum.FINISHED);
+            } else if (startTime.isBefore(LocalDate.now()) && endTime.isAfter(LocalDate.now())) {
+                activeDto.setStatus(ActiveStatusEnum.ACTING);
+            } else if (endTime.isBefore(LocalDate.now())) {
+                activeDto.setStatus(ActiveStatusEnum.FINISHED);
+            } else {
+                activeDto.setStatus(ActiveStatusEnum.RUNNABLE);
+            }
+            return activeDto;
+        }).toList();
 
         Map<String, Object> result = new HashMap<>(16);
-        result.put("classActive", allActiveByClassId);
+        result.put("classActive", list);
 
         return CommonResult.success(result);
+
+    }
+
+    @GetMapping("/info/{activeId}")
+    @Operation(summary = "query active by (activeId)")
+    public CommonResult<ActiveDto> queryActiveById(@PathVariable("activeId") String activeId) {
+        if (StringUtils.isBlank(activeId)) {
+            CommonResult.error("activeId不能为空");
+        }
+        ActiveManagerPo activeManagerPo = activeManagerService.getById(Integer.parseInt(activeId));
+        val activeDto = new ActiveDto(activeManagerPo);
+        return CommonResult.success(activeDto);
     }
 
 }
