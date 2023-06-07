@@ -1,5 +1,6 @@
 package com.ybuse.schoolbackend.active_manager.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.ybuse.schoolbackend.active_manager.ActiveStatusEnum;
 import com.ybuse.schoolbackend.active_manager.domain.dto.ActiveDto;
 import com.ybuse.schoolbackend.active_manager.domain.po.ActiveManagerPo;
@@ -20,7 +21,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -116,7 +116,7 @@ public class ActiveManagerController {
             val endTimeString = activeManagerPo.getAmTimeInterval().split("\\|")[1];
             val startTime = LocalDate.parse(startTimeString);
             val endTime = LocalDate.parse(endTimeString);
-            ActiveDto activeDto = new ActiveDto();
+            ActiveDto activeDto = new ActiveDto(activeManagerPo);
             activeDto.setId(String.valueOf(activeManagerPo.getId()));
             activeDto.setTitle(activeManagerPo.getAmName());
             activeDto.setContent(activeManagerPo.getAmContent());
@@ -140,6 +140,17 @@ public class ActiveManagerController {
 
         return CommonResult.success(result);
 
+    }
+
+    @GetMapping("/info/{activeId}")
+    @Operation(summary = "query active by (activeId)")
+    public CommonResult<ActiveDto> queryActiveById(@PathVariable("activeId") String activeId) {
+        if (StringUtils.isBlank(activeId)) {
+            CommonResult.error("activeId不能为空");
+        }
+        ActiveManagerPo activeManagerPo = activeManagerService.getById(Integer.parseInt(activeId));
+        val activeDto = new ActiveDto(activeManagerPo);
+        return CommonResult.success(activeDto);
     }
 
 }
