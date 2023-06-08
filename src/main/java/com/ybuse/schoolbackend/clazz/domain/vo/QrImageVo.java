@@ -13,6 +13,7 @@ import lombok.Data;
 @Data
 public class QrImageVo {
 
+    String classId;
     String title;
     String footer;
 }

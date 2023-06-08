@@ -1,5 +1,6 @@
 package com.ybuse.schoolbackend.api_remote.service.impl;
 
+import cn.hutool.core.lang.UUID;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ybuse.schoolbackend.api_remote.po.ImagePo;
 import com.ybuse.schoolbackend.api_remote.service.IAiService;
@@ -14,13 +15,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: hyj
@@ -47,8 +55,45 @@ public class AiServiceImpl extends ServiceImpl<IImageMapper, ImagePo> implements
         this.iImageMapper = iImageMapper;
     }
 
+    public String superResolutionReconstructionOriginal(MultipartFile file) {
+
+        UUID localOriginalImagePathUuid = UUID.randomUUID();
+        String localOriginalImagePath = "J:\\ssmp\\images\\fake\\" + localOriginalImagePathUuid + ".png";
+
+
+        byte[] fileBytes = new byte[0];
+        try {
+            fileBytes = file.getBytes();
+            Files.write(Path.of(localOriginalImagePath), fileBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // 将未解析的图片上传至 fake_images 并返回地址
+        return kodoPreUrl + KodoUtil.imagesUpload("fake_images", localOriginalImagePath, "local-"+localOriginalImagePathUuid);
+    }
+
+
     @Override
-    public String superResolutionReconstruction(MultipartFile file) {
+    //@Async
+    public List<String> superResolutionReconstruction(MultipartFile file) {
+
+        UUID localOriginalImagePathUuid = UUID.randomUUID();
+        String localOriginalImagePath = "J:\\ssmp\\images\\fake\\" + localOriginalImagePathUuid + ".png";
+
+
+        byte[] fileBytes = new byte[0];
+        try {
+            fileBytes = file.getBytes();
+            Files.write(Path.of(localOriginalImagePath), fileBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // 将未解析的图片上传至 fake_images 并返回地址
+        String fakePath = kodoPreUrl + KodoUtil.imagesUpload("fake_images", localOriginalImagePath, "local-"+localOriginalImagePathUuid);
+//        String fakePath = superResolutionReconstructionOriginal(file);
+
         try {
             String imageType = "jpg";
             WebClient webClient = WebClient.builder().build();
@@ -82,11 +127,19 @@ public class AiServiceImpl extends ServiceImpl<IImageMapper, ImagePo> implements
             imagePo.setCreateTime((new Timestamp(System.currentTimeMillis())));
             ExceptionUtil.isTrue(iImageMapper.insert(imagePo) < 1, "图片上传失败");
 
-            return remoteUrl;
+            List<String> towResultUrl = new ArrayList<>();
+            towResultUrl.add(fakePath);
+            towResultUrl.add(remoteUrl);
+            return towResultUrl;
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
+    }
+
+    @Override
+    public String uploadOriginImage(MultipartFile photo) {
+        return null;
     }
 
     @Override

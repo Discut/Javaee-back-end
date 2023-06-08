@@ -10,6 +10,7 @@ import com.ybuse.schoolbackend.active_manager.service.IActiveManagerService;
 import com.ybuse.schoolbackend.class_and_other.domain.po.ClassAndOtherPo;
 import com.ybuse.schoolbackend.class_and_other.service.IClassAndOtherService;
 import com.ybuse.schoolbackend.class_name.service.IClassNameService;
+import com.ybuse.schoolbackend.clazz.service.IQrImageService;
 import com.ybuse.schoolbackend.core.ApiV1Controller;
 import com.ybuse.schoolbackend.core.CustomException;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
@@ -20,6 +21,7 @@ import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -44,8 +46,9 @@ public class ActiveManagerController {
     private final IActiveManagerService activeManagerService;
     private final IClassAndOtherService classAndOtherService;
     private final IClassNameService classNameService;
+//    private final IImageService qrImageService;
 
-    public ActiveManagerController(IActiveManagerService activeManagerService, IClassAndOtherService classAndOtherService, IClassNameService classNameService) {
+    public ActiveManagerController(IActiveManagerService activeManagerService, IClassAndOtherService classAndOtherService, IClassNameService classNameService, IQrImageService qrImageService) {
         this.activeManagerService = activeManagerService;
         this.classAndOtherService = classAndOtherService;
         this.classNameService = classNameService;
@@ -63,6 +66,7 @@ public class ActiveManagerController {
             val interval = activeManagerVo.getStartTime() + "|" + activeManagerVo.getEndTime();
             activeManagerPo.setAmTimeInterval(interval);
             activeManagerPo.setCreateTime(new java.sql.Timestamp(System.currentTimeMillis()));
+
 
             int amId = activeManagerService.add(activeManagerPo);
             if (amId == 0) {

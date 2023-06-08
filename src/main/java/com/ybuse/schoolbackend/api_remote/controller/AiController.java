@@ -6,10 +6,15 @@ import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.core.logger.MethodType;
 import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.val;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,10 +34,14 @@ public class AiController {
 
     @PostMapping("/resolution")
     @Operation(summary = "超分辨重构并上云及落盘")
-    public CommonResult<Object> resolution(MultipartFile file) {
+    public CommonResult<Object> resolution( MultipartFile file) {
 
         Map<String, Object> result = new HashMap<>(16);
-        result.put("url", aiService.superResolutionReconstruction(file));
+        List<String> urls = aiService.superResolutionReconstruction(file);
+        // 未清晰化图片地址
+        //  清晰化图片地址
+        result.put("originalUrl", urls.get(0));
+        result.put("resolutionUrl", urls.get(1));
         return CommonResult.success(result);
     }
 

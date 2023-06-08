@@ -7,6 +7,7 @@ import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  @Author: hyj
@@ -28,7 +29,13 @@ public interface IAiService extends IService<ImagePo> {
      * @param photo 图片
      * @return 图片流
      */
-    String superResolutionReconstruction(MultipartFile photo);
+    List<String> superResolutionReconstruction(MultipartFile photo);
+
+    /**
+     * @param photo
+     * @return
+     */
+    String uploadOriginImage(MultipartFile photo);
 
     /**
      * 学生识别

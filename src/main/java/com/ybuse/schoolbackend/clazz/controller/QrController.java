@@ -1,7 +1,7 @@
 package com.ybuse.schoolbackend.clazz.controller;
 
 import com.ybuse.schoolbackend.clazz.domain.vo.QrImageVo;
-import com.ybuse.schoolbackend.clazz.service.IQrImageService;
+import com.ybuse.schoolbackend.clazz.service.QrGenerate;
 import com.ybuse.schoolbackend.core.ApiV1Controller;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.core.logger.MethodType;
@@ -10,9 +10,7 @@ import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 /**
@@ -31,19 +29,17 @@ import java.util.Map;
 @ApiV1Controller("/class")
 public class QrController {
 
-    private final IQrImageService qrImageService;
+    private final QrGenerate generate;
+
+    public QrController(QrGenerate generate) {
+        this.generate = generate;
+    }
 
 
     @PostMapping("/file/qrcode")
     @Operation(summary = "生成二维码")
-    public CommonResult<Object> generateQrController(QrImageVo qrImageVo) {
-        Map<String, Object> result = new HashMap<>();
-        result.put("url", qrImageService.generateQr(qrImageVo));
-        return CommonResult.success(result);
-    }
-
-
-    public QrController(IQrImageService qrImageService) {
-        this.qrImageService = qrImageService;
+    public CommonResult<Object> generateQrController(@RequestBody QrImageVo qrImageVo) {
+        generate.paresImage(qrImageVo);
+        return CommonResult.success(null).setMessage("获取二维码生成任务");
     }
 }

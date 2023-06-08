@@ -9,34 +9,10 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.IOUtils;
-import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.UUID;
-
-
-import com.google.gson.Gson;
-import com.qiniu.common.QiniuException;
-import com.qiniu.http.Response;
-import com.qiniu.storage.Configuration;
-import com.qiniu.storage.Region;
-import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.DefaultPutRet;
-import com.qiniu.util.Auth;
-import com.qiniu.util.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.UUID;
-
 
 
 /**
@@ -56,10 +32,10 @@ public class KodoUtil {
      * - 默认文件名存在桶中时，不覆盖<br/>
      * String token：认证凭证 <br/>
      * StringMap params： String mime：
-     *
+     * <p>
      * http://rvmy28bqc.hn-bkt.clouddn.com/qr_images/bf651282-c1cf-484e-8506-60473d4862ba.png
      */
-    public static String imagesUpload(String folderKey,String filePath,String uUid) {
+    public static String imagesUpload(String folderKey, String filePath, String uUid) {
 //        String folderKey = "qr_images";
 //        String filePath = "D:\\Javaee-course\\src\\main\\java\\com\\ybuse\\schoolbackend\\utils\\picture.jpg";
         //构造一个带指定 Region 对象的配置类，指定存储区域，和存储空间选择的区域一致
@@ -67,7 +43,7 @@ public class KodoUtil {
         //...其他参数参考类注释
         UploadManager uploadManager = new UploadManager(cfg);
         //默认不指定key的情况下，以文件内容的hash值作为文件名
-        String key = folderKey+ "/" + uUid + ".png";
+        String key = folderKey + "/" + uUid + "|" + System.currentTimeMillis() + ".png";
         FileInputStream fileInputStream = null;
         try {
 
@@ -87,7 +63,7 @@ public class KodoUtil {
                 Response response = uploadManager.put(bytes, key, upToken);
                 //解析上传成功的结果
                 DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-                System.out.println("putRet.key -------->"+putRet.key);
+                System.out.println("putRet.key -------->" + putRet.key);
                 return putRet.key;
 //                System.out.println(putRet.key);
 //                System.out.println(putRet.hash);

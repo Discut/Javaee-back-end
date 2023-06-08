@@ -3,6 +3,7 @@ package com.ybuse.schoolbackend.user_account.mapper;
 import com.ybuse.schoolbackend.user_account.domain.po.UserAccountPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserAccountMapper extends BaseMapper<UserAccountPo> {
 
+    @Select("SELECT ua.id FROM user_account as ua WHERE ua.ua_account = #{uaccountId}")
+    long getUserIdByUaccountId(String uaccountId);
 }
 
 
