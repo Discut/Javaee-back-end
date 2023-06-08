@@ -89,11 +89,12 @@ public class ActiveManagerController {
 
     }
 
-    @PutMapping("/modify")
+    @PutMapping("/modify/{activeId}")
     @Operation(summary = "update active")
-    public CommonResult<Object> updateActive(@RequestBody ActiveManagerVo activeManagerVo) {
+    public CommonResult<Object> updateActive(@RequestBody ActiveManagerVo activeManagerVo, @PathVariable("activeId") int activeId) {
 
         ActiveManagerPo activeManagerPo = new ActiveManagerPo();
+        activeManagerPo.setId(activeId);
         activeManagerPo.setAmContent(activeManagerVo.getContent());
         activeManagerPo.setAmEndContent(activeManagerVo.getEndContent());
         val interval = activeManagerVo.getStartTime() + "|" + activeManagerVo.getEndTime();
