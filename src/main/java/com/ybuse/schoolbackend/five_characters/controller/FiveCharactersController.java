@@ -8,11 +8,16 @@ import com.ybuse.schoolbackend.five_characters.domain.FiveCharacterVo;
 import com.ybuse.schoolbackend.five_characters.domain.po.FiveCharactersPo;
 import com.ybuse.schoolbackend.five_characters.service.IFiveCharactersService;
 import com.ybuse.schoolbackend.public_enum.FCenum;
+import com.ybuse.schoolbackend.prize_manager.domain.po.PrizeManagerPo;
+import com.ybuse.schoolbackend.user_account.service.IUserAccountService;
+import com.ybuse.schoolbackend.user_and_other.domain.po.UserAndOtherPo;
+import com.ybuse.schoolbackend.user_and_other.service.IUserAndOtherService;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -31,21 +36,35 @@ import java.util.*;
 public class FiveCharactersController {
 
     private final IFiveCharactersService fiveCharactersService;
+    private final IUserAndOtherService userAndOtherService;
+    private final IUserAccountService userAccountService;
 
-    public FiveCharactersController(IFiveCharactersService fiveCharactersService) {
+    public FiveCharactersController(IFiveCharactersService fiveCharactersService, IUserAndOtherService userAndOtherService, IUserAccountService userAccountService) {
         this.fiveCharactersService = fiveCharactersService;
+        this.userAndOtherService = userAndOtherService;
+        this.userAccountService = userAccountService;
     }
+
 
     @PostMapping("/post")
     @Operation(summary = "create class")
-    public CommonResult<Object> addClass(@RequestBody FiveCharacterVo fiveCharactersPo) {
+    public CommonResult<Object> addClass(@RequestBody FiveCharacterVo vo) {
+
+        int uaId = userAccountService.queryIdByAccount(vo.getAccount());
+
         FiveCharactersPo po = new FiveCharactersPo();
-        po.setFcComment(fiveCharactersPo.getComment());
-        po.setFcScore(Long.parseLong(fiveCharactersPo.getScore()));
-        po.setFcType(Long.parseLong(Objects.requireNonNull(FCenum.valueOfType(fiveCharactersPo.getType())).getType()));
+        po.setFcComment(vo.getComment());
+        po.setFcScore(Long.parseLong(vo.getScore()));
+        po.setFcType(Long.parseLong(Objects.requireNonNull(FCenum.valueOfType(vo.getType())).getType()));
+
+        int fcId = fiveCharactersService.add(po);
+        UserAndOtherPo userAndOtherPo = new UserAndOtherPo();
+        userAndOtherPo.setUid(uaId);
+        userAndOtherPo.setFcId(fcId);
+
+        userAndOtherService.add(userAndOtherPo);
 
 
-        fiveCharactersService.add(po);
         return CommonResult.success("ok");
     }
 

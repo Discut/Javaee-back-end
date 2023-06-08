@@ -4,8 +4,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.io.Serializable;
-
+/**
+ @Author: hyj
+ @Date: 2023/6/8
+ @Title:
+ * ---------
+ *  Description:
+ *
+ */
 @TableName("active_manager")
 public class ActiveManagerPo implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -29,6 +29,11 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         return userAccountMapper.insert(userAccountPo);
     }
 
+    @Override
+    public int queryIdByAccount(String account) {
+        return (int)userAccountMapper.getUserIdByUaccountId(account);
+    }
+
 }
 
 

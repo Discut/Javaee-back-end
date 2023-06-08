@@ -1,5 +1,6 @@
 package com.ybuse.schoolbackend.account_and_class.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ybuse.schoolbackend.account_and_class.domain.po.AccountAndClassPo;
 import com.ybuse.schoolbackend.account_and_class.mapper.AccountAndClassMapper;

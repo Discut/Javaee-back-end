@@ -10,4 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface IUserAccountService extends IService<UserAccountPo> {
     int insert(UserAccountPo userAccountPo);
+
+    int queryIdByAccount(String account);
 }
