@@ -1,10 +1,13 @@
 package com.ybuse.schoolbackend.five_characters.domain.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 @TableName("five_characters")
 public class FiveCharactersPo {
 
+  @TableId(type = IdType.AUTO)
   private long id;
   private long fcType;
   private String fcComment;
