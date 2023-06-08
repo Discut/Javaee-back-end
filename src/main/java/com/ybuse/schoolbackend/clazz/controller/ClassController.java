@@ -43,6 +43,8 @@ public class ClassController {
             Map<String, Object> map = new HashMap<>(16);
             map.put("id", clazz.getId());
             map.put("name", clazz.getClassName());
+            map.put("qrUrl", clazz.getQrUuid());
+
             return map;
         }).toList();
         return CommonResult.success(maps);

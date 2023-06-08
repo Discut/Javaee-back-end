@@ -55,6 +55,25 @@ public class AiServiceImpl extends ServiceImpl<IImageMapper, ImagePo> implements
         this.iImageMapper = iImageMapper;
     }
 
+    public String superResolutionReconstructionOriginal(MultipartFile file) {
+
+        UUID localOriginalImagePathUuid = UUID.randomUUID();
+        String localOriginalImagePath = "J:\\ssmp\\images\\fake\\" + localOriginalImagePathUuid + ".png";
+
+
+        byte[] fileBytes = new byte[0];
+        try {
+            fileBytes = file.getBytes();
+            Files.write(Path.of(localOriginalImagePath), fileBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // 将未解析的图片上传至 fake_images 并返回地址
+        return kodoPreUrl + KodoUtil.imagesUpload("fake_images", localOriginalImagePath, "local-"+localOriginalImagePathUuid);
+    }
+
+
     @Override
     //@Async
     public List<String> superResolutionReconstruction(MultipartFile file) {
@@ -73,6 +92,7 @@ public class AiServiceImpl extends ServiceImpl<IImageMapper, ImagePo> implements
 
         // 将未解析的图片上传至 fake_images 并返回地址
         String fakePath = kodoPreUrl + KodoUtil.imagesUpload("fake_images", localOriginalImagePath, "local-"+localOriginalImagePathUuid);
+//        String fakePath = superResolutionReconstructionOriginal(file);
 
         try {
             String imageType = "jpg";

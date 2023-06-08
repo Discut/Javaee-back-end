@@ -56,7 +56,7 @@ public class QrImageServiceImpl extends ServiceImpl<IQrImageMapper, QrImagePo> i
         qrImagePo.setQrUuid(simpleUuid);
 
         List<String> kodoQrImagesUrl;
-        kodoQrImagesUrl = UuidGenerate.qrCodeByInfo(qrImagePo, qrLogo, clientUrl, simpleUuid, fileSavePath, kodoPreUrl);
+        kodoQrImagesUrl = UuidGenerate.qrCodeByInfo(qrImagePo, qrLogo, clientUrl, qrImageVo.getClassId(), fileSavePath, kodoPreUrl);
         qrImagePo.setQrContent(kodoQrImagesUrl.get(0));
         qrImagePo.setQrImageUrl(kodoQrImagesUrl.get(1));
         qrImagePo.setCreateTime((new Timestamp(System.currentTimeMillis())));

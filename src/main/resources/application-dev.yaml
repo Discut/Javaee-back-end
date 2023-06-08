@@ -14,7 +14,7 @@ logging:
 file-save-path: J:/ssmp/images/
 
 ##  客户端（前端）首页地址
-client-url: http://192.168.227.1:8080/#/pages/index/index
+client-url: http://127.0.0.1:8080/#/inspect
 
 ##  二维码logo地址
 qrLogo-path: J:/ssmp/images/qr/qrLogo.jpg

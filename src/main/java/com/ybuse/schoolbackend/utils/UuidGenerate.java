@@ -60,19 +60,19 @@ public class UuidGenerate {
         return databaseQRURL;
     }
 
-    public static List<String> qrCodeByInfo(QrImagePo qrImagePo, String qrLogo, String clientUrl, String uUid, String fileSavePath, String kodoPreUrl){
+    public static List<String> qrCodeByInfo(QrImagePo qrImagePo, String qrLogo, String clientUrl, String classId, String fileSavePath, String kodoPreUrl){
         // 存储本地路径以及云路径
         List<String> filePaths = new ArrayList<>();
-        qrURL = fileSavePath + "qr/" + uUid + ".png";
+        qrURL = fileSavePath + "qr/" + classId + ".png";
         //  这个就是需要保存在数据库的相对地址
 //        String databaseQuery = "images/qr/" + uUid + ".png"; // IDEA中相对位置
         String siteInfo = qrImagePo.getQrTitle();
-        String content = clientUrl + "?classUuid=" + uUid;
+        String content = clientUrl + "?classid=" + classId;
         BufferedImage bufferedImage = QrCoder.createQrCode(qrLogo, qrImagePo.getQrTitle(), siteInfo, content, qrImagePo.getQrFooter());
         // 本地地址 qrURL
         QrCoder.createImage(bufferedImage,qrURL);
         // 云地址
-        String remoteUrl = kodoPreUrl + KodoUtil.imagesUpload("qr_images",qrURL,uUid);
+        String remoteUrl = kodoPreUrl + KodoUtil.imagesUpload("qr_images",qrURL,classId);
         filePaths.add(qrURL);
         filePaths.add(remoteUrl);
         return filePaths;
