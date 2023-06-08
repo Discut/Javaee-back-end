@@ -74,7 +74,7 @@ public class AiServiceImpl extends ServiceImpl<IImageMapper, ImagePo> implements
     }
 
 
-        @Override
+    @Override
     //@Async
     public List<String> superResolutionReconstruction(MultipartFile file) {
 
@@ -92,9 +92,7 @@ public class AiServiceImpl extends ServiceImpl<IImageMapper, ImagePo> implements
 
         // 将未解析的图片上传至 fake_images 并返回地址
         String fakePath = kodoPreUrl + KodoUtil.imagesUpload("fake_images", localOriginalImagePath, "local-"+localOriginalImagePathUuid);
-
 //        String fakePath = superResolutionReconstructionOriginal(file);
-
 
         try {
             String imageType = "jpg";
