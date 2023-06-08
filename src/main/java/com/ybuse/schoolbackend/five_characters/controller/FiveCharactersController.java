@@ -12,12 +12,12 @@ import com.ybuse.schoolbackend.prize_manager.domain.po.PrizeManagerPo;
 import com.ybuse.schoolbackend.user_account.service.IUserAccountService;
 import com.ybuse.schoolbackend.user_and_other.domain.po.UserAndOtherPo;
 import com.ybuse.schoolbackend.user_and_other.service.IUserAndOtherService;
+import com.ybuse.schoolbackend.public_enum.FCenum;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -44,7 +44,6 @@ public class FiveCharactersController {
         this.userAndOtherService = userAndOtherService;
         this.userAccountService = userAccountService;
     }
-
 
     @PostMapping("/post")
     @Operation(summary = "create class")

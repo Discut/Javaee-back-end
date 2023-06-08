@@ -11,13 +11,13 @@ logging:
 
 
 ##  图片上传路径
-file-save-path: J:/ssmp/images/
+file-save-path: F:/temp/
 
 ##  客户端（前端）首页地址
 client-url: http://127.0.0.1:8080/#/inspect
 
 ##  二维码logo地址
-qrLogo-path: J:/ssmp/images/qr/qrLogo.jpg
+qrLogo-path: F:/temp/logo.png
 
 ##  桶域名前置
 kodo_pre_url: http://rvmy28bqc.hn-bkt.clouddn.com/

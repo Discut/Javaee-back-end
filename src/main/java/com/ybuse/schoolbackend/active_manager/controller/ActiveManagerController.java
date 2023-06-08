@@ -79,9 +79,6 @@ public class ActiveManagerController {
 
             // 返回中间表主键
             int id = classAndOtherService.add(classAndOtherPo);
-
-
-
             return CommonResult.success(id);
 
         } catch (Exception e) {
