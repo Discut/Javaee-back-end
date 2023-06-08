@@ -6,7 +6,6 @@ import com.ybuse.schoolbackend.core.logger.MethodType;
 import com.ybuse.schoolbackend.core.logger.annotation.PrintLog;
 import com.ybuse.schoolbackend.scoresys.domain.dto.User;
 import com.ybuse.schoolbackend.user.domain.dto.LoginDto;
-import com.ybuse.schoolbackend.user.domain.po.UserAccount;
 import com.ybuse.schoolbackend.user.domain.vo.UserInfoVo;
 import com.ybuse.schoolbackend.user.service.itfc.IUserService;
 import com.ybuse.schoolbackend.utils.TokenUtil;
@@ -14,11 +13,11 @@ import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @PrintLog(
         methodType = MethodType.HTTP_UP
@@ -41,12 +40,16 @@ public class UserController {
     }
 
 
-    @PostMapping("/info")
-    public CommonResult<UserInfoVo> info(@RequestBody Map<String, Object> json) {
-        Object token = json.get("token");
-        return service.getUserInfo(token.toString());
+    @PostMapping("/me")
+    public CommonResult<UserInfoVo> me(@RequestBody TokenVo tokenVo) {
+        return service.getUserInfo(tokenVo.getToken());
     }
 
+    @GetMapping("/info/{accountId}")
+    @Operation(summary = "获取用户信息")
+    public CommonResult<UserInfoDto> info(@PathVariable String accountId) {
+        return service.getOtherUserInfo(accountId);
+    }
 
     @PostMapping("/test")
     @Operation(summary = "测试")
@@ -54,11 +57,25 @@ public class UserController {
         return CommonResult.success(loginDto);
     }
 
-
     @GetMapping("/list/{type}")
     @Operation(summary = "获取不同类型的用户")
     public CommonResult<List<User>> list(@PathVariable String type, @RequestParam String key, @RequestParam String classId) {
         return service.getStudentList(key, classId);
+    }
+
+    @Data
+    public static class UserInfoDto {
+        private String id;
+        private String name;
+        private String subtitle;
+        private List<String> roles;
+        private String avatar;
+        private String des;
+    }
+
+    @Data
+    public static class TokenVo {
+        private String token;
     }
 
 }

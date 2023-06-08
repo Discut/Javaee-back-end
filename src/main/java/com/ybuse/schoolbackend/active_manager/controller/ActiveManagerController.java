@@ -1,5 +1,6 @@
 package com.ybuse.schoolbackend.active_manager.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.ybuse.schoolbackend.active_manager.ActiveStatusEnum;
 import com.ybuse.schoolbackend.active_manager.domain.dto.ActiveDto;
@@ -64,10 +65,12 @@ public class ActiveManagerController {
             activeManagerPo.setCreateTime(new java.sql.Timestamp(System.currentTimeMillis()));
 
             int amId = activeManagerService.add(activeManagerPo);
-
+            if (amId == 0) {
+                throw new CustomException("添加失败");
+            }
             ClassAndOtherPo classAndOtherPo = new ClassAndOtherPo();
-            classAndOtherPo.setAmId(amId);
-            classAndOtherPo.setClassNo(activeManagerVo.getSubject());
+            classAndOtherPo.setAmId(activeManagerPo.getId());
+            classAndOtherPo.setClassNo(String.valueOf(classNameService.queryByClassName(activeManagerVo.getSubject())));
             classAndOtherPo.setCreateTime(new java.sql.Timestamp(System.currentTimeMillis()));
 
             // 返回中间表主键
@@ -81,26 +84,29 @@ public class ActiveManagerController {
 
     @DeleteMapping("/delete/{activeId}")
     @Operation(summary = "delete active")
-    public CommonResult<Object> deleteActive(@PathVariable("activeId") int activeId) {
-
-        ExceptionUtil.isTrue(!activeManagerService.removeById(activeId), "删除失败");
-        int i = classAndOtherService.deleteById(activeId);
-        return CommonResult.success("ok-" + i);
-
+    public CommonResult<Object> deleteActive(@PathVariable("activeId") int[] activeId) {
+        Map<String, Object> result = new HashMap<>();
+        for (int id : activeId) {
+            ExceptionUtil.isTrue(!activeManagerService.removeById(id), "删除失败");
+            classAndOtherService.deleteById(id);
+            result.put(String.valueOf(id), classAndOtherService.deleteById(id) > 0 ? "success" : "fail");
+        }
+        return CommonResult.success(result);
     }
 
-    @PutMapping("/modify")
+    @PutMapping("/modify/{activeId}")
     @Operation(summary = "update active")
-    public CommonResult<Object> updateActive(@RequestBody ActiveManagerVo activeManagerVo) {
+    public CommonResult<Object> updateActive(@RequestBody ActiveManagerVo activeManagerVo, @PathVariable("activeId") int activeId) {
 
         ActiveManagerPo activeManagerPo = new ActiveManagerPo();
+        activeManagerPo.setId(activeId);
         activeManagerPo.setAmContent(activeManagerVo.getContent());
         activeManagerPo.setAmEndContent(activeManagerVo.getEndContent());
         val interval = activeManagerVo.getStartTime() + "|" + activeManagerVo.getEndTime();
         activeManagerPo.setAmTimeInterval(interval);
         activeManagerPo.setCreateTime(new java.sql.Timestamp(System.currentTimeMillis()));
 
-        ExceptionUtil.isTrue(!activeManagerService.updateById(activeManagerPo), "删除失败");
+        ExceptionUtil.isTrue(!activeManagerService.updateById(activeManagerPo), "修改失败");
 
         return CommonResult.success("ok");
     }
