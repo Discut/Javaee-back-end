@@ -13,8 +13,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  *
  */
 @TableName("active_manager")
-public class ActiveManagerPo implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ActiveManagerPo {
 
     @TableId(value = "id", type = IdType.AUTO)
     private long id;

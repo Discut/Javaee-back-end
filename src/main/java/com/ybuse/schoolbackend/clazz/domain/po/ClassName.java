@@ -16,6 +16,7 @@ public class ClassName {
     @TableId
     private long id;
     private String className;
+    private String qrUuid;
     private java.sql.Timestamp createTime;
 
 
