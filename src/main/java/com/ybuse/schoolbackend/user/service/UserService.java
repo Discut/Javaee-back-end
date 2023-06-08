@@ -9,6 +9,7 @@ import com.ybuse.schoolbackend.clazz.dao.IClassMapper;
 import com.ybuse.schoolbackend.clazz.domain.po.ClassName;
 import com.ybuse.schoolbackend.core.domain.vo.CommonResult;
 import com.ybuse.schoolbackend.public_enum.RoleEnum;
+import com.ybuse.schoolbackend.user.controller.UserController;
 import com.ybuse.schoolbackend.user.dao.IUserAccountDao;
 import com.ybuse.schoolbackend.user.domain.dto.LoginResponseDto;
 import com.ybuse.schoolbackend.user.domain.po.UserAccount;
@@ -115,6 +116,35 @@ public class UserService implements IUserService {
         objectCommonResult.setStatus(200);
         objectCommonResult.setMessage("获取用户信息成功");
         return objectCommonResult;
+    }
+
+    @Override
+    public CommonResult<UserController.UserInfoDto> getOtherUserInfo(String accountId) {
+
+        LambdaQueryWrapper<UserAccount> wrapper = new LambdaQueryWrapper<>();
+
+        wrapper.eq(
+                StringUtils.isNotBlank(accountId),
+                UserAccount::getUaAccount,
+                accountId);
+        UserAccount userAccount = userAccountDao.selectOne(wrapper);
+        if (Objects.isNull(userAccount)) {
+            return CommonResult.error("获取用户信息失败");
+        }
+        UserController.UserInfoDto userInfoVo = new UserController.UserInfoDto();
+        RoleEnum roleEnum = RoleEnum.valueOf((int) userAccount.getUaType());
+        if (roleEnum != null) {
+            userInfoVo.setRoles(List.of("ROLE_"+roleEnum.name()));
+        }
+        userInfoVo.setId(userInfoVo.getId());
+        userInfoVo.setSubtitle("大学生");
+        userInfoVo.setName(userAccount.getUaName());
+        userInfoVo.setAvatar("https://img95.699pic.com/xsj/03/gi/fg.jpg%21/fw/700/watermark/url/L3hzai93YXRlcl9kZXRhaWwyLnBuZw/align/southeast");
+        userInfoVo.setDes("作为社会新技术、新思想的前沿群体、国家培养的高级专门专业人才，大学生代表年轻有活力一族，是具有开拓性的建设与创造的主力军，是推动社会进步的主要人群。");
+
+        return CommonResult
+                .success(userInfoVo)
+                .setMessage("获取用户信息成功");
     }
 
     @Override

@@ -85,10 +85,9 @@ public class ActiveManagerController {
     @DeleteMapping("/delete/{activeId}")
     @Operation(summary = "delete active")
     public CommonResult<Object> deleteActive(@PathVariable("activeId") int[] activeId) {
-
-        ExceptionUtil.isTrue(!activeManagerService.removeById(activeId), "删除失败");
         Map<String, Object> result = new HashMap<>();
         for (int id : activeId) {
+            ExceptionUtil.isTrue(!activeManagerService.removeById(id), "删除失败");
             classAndOtherService.deleteById(id);
             result.put(String.valueOf(id), classAndOtherService.deleteById(id) > 0 ? "success" : "fail");
         }

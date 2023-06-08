@@ -11,6 +11,7 @@ public class UserAccount {
     private long id;
     private String uaAccount;
     private String uaPassword;
+    private String uaName;
     private long uaType;
     private long uaClassId;
     private String uaGroup;
@@ -90,4 +91,11 @@ public class UserAccount {
         this.lastLogin = lastLogin;
     }
 
+    public String getUaName() {
+        return uaName;
+    }
+
+    public void setUaName(String uaName) {
+        this.uaName = uaName;
+    }
 }

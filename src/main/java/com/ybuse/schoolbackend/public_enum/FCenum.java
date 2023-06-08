@@ -16,5 +16,14 @@ public enum FCenum {
     private final String type;
     private final String name;
 
+    public static FCenum valueOfType(String type) {
+        for (FCenum e : values()) {
+            if (e.getType().equals(type)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
 
 }
