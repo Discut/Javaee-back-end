@@ -34,10 +34,10 @@ public class AiController {
 
     @PostMapping("/resolution")
     @Operation(summary = "超分辨重构并上云及落盘")
-    public CommonResult<Object> resolution( MultipartFile file) {
+    public CommonResult<Object> resolution( @RequestParam("wangeditor-uploaded-image") MultipartFile wangeditorUploadedImage) {
 
         Map<String, Object> result = new HashMap<>(16);
-        List<String> urls = aiService.superResolutionReconstruction(file);
+        List<String> urls = aiService.superResolutionReconstruction(wangeditorUploadedImage);
         // 未清晰化图片地址
         //  清晰化图片地址
         result.put("originalUrl", urls.get(0));

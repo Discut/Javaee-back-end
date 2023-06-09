@@ -74,7 +74,7 @@ public class WebSecurityConfig {
                 .and()
                 //.authorizeRequests()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/user/login").permitAll()
+                .requestMatchers("/api/v1/user/login", "/api/v1/remote/resolution").permitAll()
                 .requestMatchers("/v1/api-docs/**", "/swagger-ui/**").permitAll()// 过滤swagger访问路径
                 //.antMatchers("/api/v1/user/login").anonymous()
                 .anyRequest().authenticated()
